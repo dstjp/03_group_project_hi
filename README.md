@@ -1,4 +1,7 @@
-# Webpack Template
+# Group Project 03_Code_and_Collobarate
+
+We will be creating an e-commerce website by utilizing agile methodlogies.
+
 To intall packages run "npm i" 
 
 To run tests run "npm test"
