@@ -6,6 +6,7 @@ const htmlContent = `
     <button id="dropdownButton">Cart</button>
     <div id="dropdownMenu" class="dropdown-content">
      <div id="cartItems"></div>
+           <div id="cartTotal">Total: $0</div>
     </div>
    <div class="product">
       <div id="productInfo"></div>
@@ -35,12 +36,17 @@ document.getElementById('dropdownButton').addEventListener('click', function() {
       // Add event listener to the "Add to cart" button
       document.getElementById('addToCartButton').addEventListener('click', function() {
         const cartItems = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
         const cartItemHtml = `
           <div class="cart-item">
             <p>${data.title} - $${data.price}</p>
           </div>
         `;
         cartItems.innerHTML += cartItemHtml;
-      });
+      // Update the total amount
+      const currentTotal = parseFloat(cartTotal.textContent.replace('Total: $', ''));
+      const newTotal = currentTotal + data.price;
+      cartTotal.textContent = `Total: $${newTotal.toFixed(2)}`;
+    });
   })
   .catch(error => console.error('Error fetching product:', error));
