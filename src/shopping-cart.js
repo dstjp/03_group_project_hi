@@ -5,9 +5,11 @@ const htmlContent = `
     <p>awdwd</p>
     <button id="dropdownButton">Cart</button>
     <div id="dropdownMenu" class="dropdown-content">
-      <a href="#">Link 1</a>
-      <a href="#">Link 2</a>
-      <a href="#">Link 3</a>
+     <div id="cartItems"></div>
+    </div>
+   <div class="product">
+      <div id="productInfo"></div>
+      <button id="addToCartButton">Add to cart</button>
     </div>
   </div>
 `;
@@ -18,3 +20,27 @@ document.getElementById('content').innerHTML = htmlContent;
 document.getElementById('dropdownButton').addEventListener('click', function() {
     document.getElementById('dropdownMenu').classList.toggle('show');
   });
+
+  fetch('https://fakestoreapi.com/products/1')
+  .then(res=>res.json())
+  .then(data => {
+    const productInfo = document.getElementById('productInfo');
+    const productHtml = `
+      <h2>${data.title}</h2>
+      <img src="${data.image}" alt="${data.title}" style="width:100px;height:100px;">
+      <p>${data.description}</p>
+      <p>Price: $${data.price}</p>
+    `;
+    productInfo.innerHTML = productHtml;
+      // Add event listener to the "Add to cart" button
+      document.getElementById('addToCartButton').addEventListener('click', function() {
+        const cartItems = document.getElementById('cartItems');
+        const cartItemHtml = `
+          <div class="cart-item">
+            <p>${data.title} - $${data.price}</p>
+          </div>
+        `;
+        cartItems.innerHTML += cartItemHtml;
+      });
+  })
+  .catch(error => console.error('Error fetching product:', error));
