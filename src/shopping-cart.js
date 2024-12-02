@@ -39,29 +39,77 @@ fetch('https://fakestoreapi.com/products/1')
     document.getElementById('addToCartButton').addEventListener('click', function() {
       const cartItems = document.getElementById('cartItems');
       const cartTotal = document.getElementById('cartTotal');
-      const cartItemHtml = `
-        <div class="cart-item">
-          <p>${data.title} - $${data.price}</p>
-          <button class="removeFromCartButton">Remove</button>
-        </div>
-      `;
-      const cartItemElement = document.createElement('div');
-      cartItemElement.innerHTML = cartItemHtml;
-      cartItems.appendChild(cartItemElement);
+      let cartItem = cartItems.querySelector(`.cart-item[data-id="${data.id}"]`);
+    
+      if (cartItem) {
+        // Update the quantity of the existing item
+        let quantityElement = cartItem.querySelector('.quantity');
+        let quantity = parseInt(quantityElement.textContent);
+        quantityElement.textContent = quantity + 1;
+      } else {
+        // Add a new item to the cart
+        const cartItemHtml = `
+          <div class="cart-item" data-id="${data.id}">
+            <p>${data.title} - $${data.price} x <span class="quantity">1</span></p>
+            <button class="removeFromCartButton">-</button>
+            <button class="increaseQuantityButton">+</button>
+            <button class="removeAllButton">Remove All</button>
+          </div>
+        `;
+        cartItems.insertAdjacentHTML('beforeend', cartItemHtml);
+    
+        // Add event listener to the "Remove" button
+        cartItem = cartItems.querySelector(`.cart-item[data-id="${data.id}"]`);
+        cartItem.querySelector('.removeFromCartButton').addEventListener('click', function() {
+          const quantityElement = cartItem.querySelector('.quantity');
+          let quantity = parseInt(quantityElement.textContent);
+    
+          if (quantity > 1) {
+            // Decrease the quantity by one
+            quantityElement.textContent = quantity - 1;
+          } else {
+            // Remove the item from the cart
+            cartItem.remove();
+          }
+    
+          // Update the cart total
+          let total = parseFloat(cartTotal.textContent) || 0;
+          total -= data.price;
+          cartTotal.textContent = total.toFixed(2);
+        });
 
-      // Update the total amount
-      const currentTotal = parseFloat(cartTotal.textContent.replace('Total: $', ''));
-      const newTotal = currentTotal + data.price;
-      cartTotal.textContent = `Total: $${newTotal.toFixed(2)}`;
+        // Add event listener to the "Increase" button
+        cartItem.querySelector('.increaseQuantityButton').addEventListener('click', function() {
+          const quantityElement = cartItem.querySelector('.quantity');
+          let quantity = parseInt(quantityElement.textContent);
+          quantityElement.textContent = quantity + 1;
+    
+          // Update the cart total
+          let total = parseFloat(cartTotal.textContent) || 0;
+          total += data.price;
+          cartTotal.textContent = total.toFixed(2);
+        });
 
-      // Add event listener to the "Remove" button
-      cartItemElement.querySelector('.removeFromCartButton').addEventListener('click', function() {
-        cartItems.removeChild(cartItemElement);
+        // Add event listener to the "Remove All" button
+        cartItem.querySelector('.removeAllButton').addEventListener('click', function() {
+          const quantityElement = cartItem.querySelector('.quantity');
+          const quantity = parseInt(quantityElement.textContent);
+          const itemTotalPrice = data.price * quantity;
 
-        // Update the total amount
-        const updatedTotal = parseFloat(cartTotal.textContent.replace('Total: $', '')) - data.price;
-        cartTotal.textContent = `Total: $${updatedTotal.toFixed(2)}`;
-      });
+          // Remove the item from the cart
+          cartItem.remove();
+
+          // Update the cart total
+          let total = parseFloat(cartTotal.textContent) || 0;
+          total -= itemTotalPrice;
+          cartTotal.textContent = total.toFixed(2);
+        });
+      }
+    
+      // Update the cart total
+      let total = parseFloat(cartTotal.textContent) || 0;
+      total += data.price;
+      cartTotal.textContent = total.toFixed(2);
     });
   })
   .catch(error => console.error('Error fetching product:', error));
