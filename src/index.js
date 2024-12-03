@@ -1,17 +1,10 @@
 
-import './shopping-cart.js'
-import './shopping-cart.css'
+import './pages/shopping_cart/shopping-cart.js'
+import './pages/shopping_cart/shopping-cart.css'
 import './global.css'
-
-//  import Checkout from "./pages/checkout/checkout.js";
-//  import ProductListing from "./pages/product_listing/product_listing.js";
-//  import ShoppingCart from "./pages/shopping_cart/shopping_cart.js"; 
-
-
 
 
 /* MODAL CARD */
-
 const openModalButtons = document.querySelectorAll('[data-modal-target]')
 const closeModalButtons = document.querySelectorAll('[data-close-button]')
 const overlay = document.getElementById('overlay')
