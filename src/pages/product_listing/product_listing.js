@@ -25,7 +25,7 @@ function renderProducts(products) {
         <img src="${product.image}" alt="${product.title}" class="product-image">
         <hr>
         <h3 class="product-title">${product.title}</h3>
-        <hr>
+        
         <p class="product-description">${product.description.slice(0, 100)}...</p>
         <hr>
         <p class="product-price">$${product.price}</p>

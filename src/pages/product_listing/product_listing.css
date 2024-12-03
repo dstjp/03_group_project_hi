@@ -80,6 +80,7 @@
     /* white-space: normal; */
 }
 
+/* Product Title Scrollbar*/
 .product-title::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -93,6 +94,7 @@
     background-color: #aaa;
 }
 
+/* Product Description Scrollbar*/
 .product-description::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -110,8 +112,7 @@
 .product-price {
     font-size: 1.2rem;
     font-weight: bold;
-    margin-top: ;
-    color: #27ae60; /* Green color for price */
+    color: #27ae60;
 }
 
 /* Error Message Styling */
@@ -120,7 +121,7 @@
     font-size: 1.2em;
     text-align: center;
     margin: 20px 0;
-    background-color: #ffe6e6; /* Light red background */
+    background-color: #ffe6e6; 
     padding: 10px;
     border-radius: 6px;
 }
