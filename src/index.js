@@ -1,3 +1,6 @@
+import './global.css'
+import './pages/product_listing/product_listing.css';
+import './pages/product_listing/product_listing.js';
 
 import './pages/shopping_cart/shopping-cart.js'
 import './pages/shopping_cart/shopping-cart.css'
@@ -39,4 +42,5 @@ function closeModal(modal) {
     if (modal == null) return 
     modal.classList.remove('active')
     overlay.classList.remove('active')
-}
+};
+
