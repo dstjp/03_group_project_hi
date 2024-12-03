@@ -1,8 +1,6 @@
 import './global.css'
 import './pages/product_listing/product_listing.css';
 import './pages/product_listing/product_listing.js';
-
-
 /* MODAL CARD */
 
 const openModalButtons = document.querySelectorAll('[data-modal-target]')
@@ -40,3 +38,4 @@ function closeModal(modal) {
     modal.classList.remove('active')
     overlay.classList.remove('active')
 };
+
