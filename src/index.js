@@ -1,10 +1,6 @@
 import './global.css'
 import './pages/product_listing/product_listing.css';
 import './pages/product_listing/product_listing.js';
-
-
-
-
 /* MODAL CARD */
 
 const openModalButtons = document.querySelectorAll('[data-modal-target]')
