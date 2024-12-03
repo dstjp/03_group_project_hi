@@ -1,7 +1,7 @@
 {
   "name": "webpack_template",
   "version": "1.0.0",
-  "description": "",
+  "description": "We will be creating an e-commerce website by utilizing agile methodlogies.",
   "main": "index.js",
   "scripts": {
     "test": "jest",
