@@ -15,7 +15,7 @@ const htmlContent = `
 `;
 
 // Insert the HTML content into the div with id "content"
-document.getElementById('content').innerHTML = htmlContent;
+document.getElementById('shopping-cart').innerHTML = htmlContent;
 
 // Add event listener to the button to toggle the dropdown menu
 document.getElementById('dropdownButton').addEventListener('click', function() {
