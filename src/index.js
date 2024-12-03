@@ -2,8 +2,8 @@ import './global.css'
 import './pages/product_listing/product_listing.css';
 import './pages/product_listing/product_listing.js';
 
-import './pages/shopping_cart/shopping-cart.js'
-import './pages/shopping_cart/shopping-cart.css'
+import './pages/shopping_cart/shopping_cart.js'
+import './pages/shopping_cart/shopping_cart.css'
 import './global.css'
 
 
