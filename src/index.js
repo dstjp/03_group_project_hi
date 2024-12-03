@@ -1,8 +1,7 @@
-/* import './global.css'
+import './global.css'
 import Checkout from "./pages/checkout/checkout.js";
 import ProductListing from "./pages/product_listing/product_listing.js";
-import ShoppingCart from "./pages/shopping_cart/shopping_cart.js"; */
-
+import ShoppingCart from "./pages/shopping_cart/shopping_cart.js";
 
 
 
@@ -42,4 +41,6 @@ function closeModal(modal) {
     if (modal == null) return 
     modal.classList.remove('active')
     overlay.classList.remove('active')
-}
+};
+import './pages/product_listing/product_listing.css';
+import './pages/product_listing/product_listing.js';
