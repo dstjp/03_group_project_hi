@@ -1,12 +1,11 @@
-import './assets/styles/reset.css'
-import './assets/styles/style.css'
 
 import './shopping-cart.js'
 import './shopping-cart.css'
-/* import './global.css'
-import Checkout from "./pages/checkout/checkout.js";
-import ProductListing from "./pages/product_listing/product_listing.js";
-import ShoppingCart from "./pages/shopping_cart/shopping_cart.js"; */
+import './global.css'
+
+//  import Checkout from "./pages/checkout/checkout.js";
+//  import ProductListing from "./pages/product_listing/product_listing.js";
+//  import ShoppingCart from "./pages/shopping_cart/shopping_cart.js"; 
 
 
 
