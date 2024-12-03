@@ -38,7 +38,6 @@ fetch('https://fakestoreapi.com/products/1')
     // Add event listener to the "Add to cart" button
     document.getElementById('addToCartButton').addEventListener('click', function() {
       const cartItems = document.getElementById('cartItems');
-      const cartTotal = document.getElementById('cartTotal');
       let cartItem = cartItems.querySelector(`.cart-item[data-id="${data.id}"]`);
     
       if (cartItem) {
