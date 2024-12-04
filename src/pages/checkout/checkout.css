@@ -97,14 +97,14 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
+.section-title {
   font-size: 24px;
   margin-bottom: 10px;
   background-color: #222222;
   color: white;
   padding: 10px 10px;
 }
-h3{
+.bag-title{
   font-size: 20px;
   margin-bottom: 10px;
   background-color: #222222;
@@ -112,11 +112,11 @@ h3{
   padding: 10px 10px;
 }
 
-p {
+/* .p {
   margin-bottom: 20px;
   font-size: 16px;
   color: #333333;
-}
+} */
 
 /* Form styles */
 .form-group {
@@ -126,9 +126,7 @@ p {
   margin-bottom: 15px;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="tel"] {
+.form-group input{
   flex: 1;
   padding: 10px;
   border: 1px solid #ccc;
@@ -136,8 +134,8 @@ input[type="tel"] {
   width: calc(50% - 10px); 
 }
 
-button[type="submit"],
-.continue-button {
+
+.btn {
   width: 25%;
   padding: 12px;
   background-color: #ff4500;
@@ -148,8 +146,8 @@ button[type="submit"],
   margin-left: 75%;
 }
 
-button[type="submit"]:hover,
-.continue-button:hover {
+
+.btn:hover {
   background-color: #d93600;
 }
 
@@ -183,7 +181,7 @@ button[type="submit"]:hover,
   transition: outline 0.5s ease-out;
 }
 
-.overlay {
+.dialog-container {
   display: none;
   position: fixed;
   top: 0;
@@ -194,7 +192,7 @@ button[type="submit"]:hover,
   z-index: 1000;
 }
 
-.dialog {
+.dialog-box {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -227,7 +225,7 @@ button[type="submit"]:hover,
     max-width: 25px;
   }
 
-  .continue-button {
+  .btn {
     font-size: 14px;
   }
 
@@ -257,13 +255,7 @@ button[type="submit"]:hover,
     flex: 1 1 100%;
   }
 
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"] {
+  form-group input {
     width: 100%; 
   }
-}
-
-@media (max-width: 480px) {
-  
 }
