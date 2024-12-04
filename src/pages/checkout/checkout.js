@@ -62,7 +62,7 @@ export function renderCheckoutPage() {
    <div class="main-content">
         <!-- Shipping Section -->
         <section class="section">
-          <h2>Shipping</h2>
+          <h2 class="section-title">Shipping</h2>
           <div class="delivery-type">
             <label><input type="radio" name="delivery" checked /> Home</label>
             <label><input type="radio" name="delivery" />Office</label>
@@ -105,13 +105,13 @@ export function renderCheckoutPage() {
                 required
               />
             </div>
-          <button type="submit">PROCEED TO PAYMENT</button> 
+          <button type="submit" class="btn">PROCEED TO PAYMENT</button> 
             </form>
         </section>
     
         <!-- Payment Section -->
         <section class="section payment-container">
-          <h2>Payment</h2>
+          <h2 class="section-title">Payment</h2>
           <p>How would you like to pay?</p>
           <!-- Payment options here -->
           <form id="payment-form">
@@ -146,7 +146,7 @@ export function renderCheckoutPage() {
                 <img src="${paypalImage}" alt="Klarna"/>
               </div>
     
-              <button type="submit" class="continue-button">
+              <button type="submit" class="btn">
                 CONFIRM AND PAY
               </button>
             </form>
@@ -155,7 +155,7 @@ export function renderCheckoutPage() {
     
       <!-- Sidebar: In Your Bag -->
       <aside class="sidebar">
-      <h3>IN YOUR BAG</h3>
+      <h3 class="bag-title">IN YOUR BAG</h3>
       <div class="summary">
         <p>Subtotal <span>$${subtotal.toFixed(2)}</span></p>
         <p>Estimated Shipping <span>$${shipping.toFixed(2)}</span></p>
@@ -169,8 +169,8 @@ export function renderCheckoutPage() {
       </div>
     </aside>
 
-      <div id="overlay" class="overlay">
-  <div class="dialog">
+      <div id="dialog-container" class="dialog-container">
+  <div class="dialog-box">
     <p>Thank you for your order!</p>
   </div>
 </div>
@@ -204,12 +204,12 @@ export function renderCheckoutPage() {
 function handleFormSubmit(event) {
   event.preventDefault(); 
   document.body.style.opacity = '0.8';
-  document.getElementById('overlay').style.display = 'block';
+  document.getElementById('dialog-container').style.display = 'block';
   
   // hide the dialog after a few seconds:
   setTimeout(function() {
     document.body.style.opacity = '1';
-    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('dialog-container').style.display = 'none';
   
 
   // Reset forms to their initial state
