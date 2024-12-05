@@ -1,0 +1,67 @@
+/* Filter Container */
+.filter-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+}
+
+/* Filter Button */
+.filter-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #591212; /* Dark red color */
+    color: white; /* White text for contrast */
+    border: none; /* Remove default border */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.filter-button.active {
+    background-color: #e44d26; /* Highlight active filter */
+    transform: scale(1.1); /* Slightly enlarge active button */
+}
+
+.filter-button:hover {
+    background-color: #e0e0e0; /* Lighter hover effect */
+    color: black; /* Black text on hover */
+}
+
+/* Sort and Price Range */
+#sort-select, #price-range {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #ffffff;
+}
+
+#price-value {
+    font-weight: bold;
+    margin-left: 10px;
+    color: #591212;
+}
+
+.error-message {
+    color: #e44d26;
+    text-align: center;
+    font-weight: bold;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #ffe6e6;
+    border-radius: 5px;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+    .filter-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

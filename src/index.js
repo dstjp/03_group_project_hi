@@ -1,11 +1,33 @@
 import './global.css'
 import './pages/product_listing/product_listing.css';
 import './pages/product_listing/product_listing.js';
+import './pages/filter/filter.js';
 
-import './pages/shopping_cart/shopping_cart.js'
-import './pages/shopping_cart/shopping_cart.css'
-import './global.css'
+//checkout page code starts
+import { renderCheckoutPage } from "./pages/checkout/checkout.js";
 
+document.addEventListener("DOMContentLoaded", () => {
+  // Simple router for hash-based navigation
+  function navigateTo(hash) {
+    switch (hash) {
+      case "#checkout":
+        renderCheckoutPage();
+        break;
+      // Add cases for other pages like product listing, cart, etc.
+      
+      default:
+        document.getElementById("app").innerHTML = "<h2>Welcome to our E-Commerce Site</h2>";
+    }
+  }
+
+  // Load initial page based on hash
+  window.addEventListener("hashchange", () => navigateTo(window.location.hash));
+  navigateTo(window.location.hash || "#");
+});
+
+//checkout page code ends
+
+// product listing code starts
 
 /* MODAL CARD */
 const openModalButtons = document.querySelectorAll('[data-modal-target]')
@@ -44,3 +66,4 @@ function closeModal(modal) {
     overlay.classList.remove('active')
 };
 
+//product listing code ends
