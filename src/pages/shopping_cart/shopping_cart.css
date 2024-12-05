@@ -13,3 +13,8 @@
     display: block;
   } 
 
+/* Example CSS to ensure the element is visible */
+.shopping-cart-img {
+  display: block; /* Ensure the element is displayed */
+  visibility: visible; /* Ensure the element is visible */
+}

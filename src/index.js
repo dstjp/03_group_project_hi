@@ -2,6 +2,7 @@ import './global.css'
 import './pages/product_listing/product_listing.css';
 import './pages/product_listing/product_listing.js';
 import './pages/filter/filter.js';
+import './pages/shopping_cart/shopping_cart.css';
 
 //checkout page code starts
 import { renderCheckoutPage } from "./pages/checkout/checkout.js";
