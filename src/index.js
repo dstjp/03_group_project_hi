@@ -23,3 +23,4 @@ document.addEventListener("DOMContentLoaded", () => {
   navigateTo(window.location.hash || "#");
 });
 
+

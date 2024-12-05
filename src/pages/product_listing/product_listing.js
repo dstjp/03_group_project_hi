@@ -15,6 +15,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       const filteredProducts = applyFilters(allProducts, filterState);
       displayProducts(filteredProducts);
     });
+    
+    //Search
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.toLowerCase();
+      const filteredProducts = allProducts.filter(product => 
+        product.title.toLowerCase().includes(query)
+      );
+      displayProducts(filteredProducts)
+    })
 
     // Initial display of all products
     displayProducts(allProducts);
@@ -43,3 +52,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       .join("");
   }
 });
+
+
+//Search
