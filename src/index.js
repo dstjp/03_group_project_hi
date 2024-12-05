@@ -1,9 +1,10 @@
-
 import './global.css'
 import './pages/product_listing/product_listing.css';
 import './pages/product_listing/product_listing.js';
+import './pages/filter/filter.js';
+
 //checkout page code starts
-import { renderCheckoutPage } from "./pages/checkout/checkout.js"; 
+import { renderCheckoutPage } from "./pages/checkout/checkout.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Simple router for hash-based navigation
