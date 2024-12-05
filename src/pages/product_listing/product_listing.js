@@ -4,9 +4,13 @@ import { createFilterUI, applyFilters } from '../filter/filter.js';  // Import y
 
 let cart = [];  // Store cart items
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
+  init();
+});
+
+export async function init() {
   const productListContainer = document.getElementById("product-list");
-  const filterContainer = document.getElementById("filter-container");  // Add this line
+  const filterContainer = document.getElementById("filter-container");  
   let allProducts = [];  // Store all products
 
   try {
@@ -125,10 +129,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     });
   }
-});
+};
 
 const button = `
-   <div>
+<div class="shopping-cart-container">
    <button class="shopping-cart-img" id="dropdownButton"> <svg 
                 width="24" 
                 height="29" 
