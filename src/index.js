@@ -1,6 +1,7 @@
 import './global.css'
 import './pages/product_listing/product_listing.css';
 import './pages/product_listing/product_listing.js';
+//checkout page code starts
 import { renderCheckoutPage } from "./pages/checkout/checkout.js";
 import './pages/filter/filter.js';
 
@@ -22,6 +23,10 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("hashchange", () => navigateTo(window.location.hash));
   navigateTo(window.location.hash || "#");
 });
+
+//checkout page code ends
+
+// product listing code starts
 
 /* MODAL CARD */
 
@@ -61,3 +66,4 @@ function closeModal(modal) {
     overlay.classList.remove('active')
 };
 
+//product listing code ends
