@@ -1,9 +1,14 @@
-
 import './global.css'
 import './pages/product_listing/product_listing.css';
 import './pages/product_listing/product_listing.js';
-import { renderCheckoutPage } from "./pages/checkout/checkout.js"; 
 import './pages/filter/filter.js';
+import './pages/shopping_cart/shopping_cart.js';
+import Cart from './pages/shopping_cart/shopping_cart.js';
+
+
+
+//checkout page code starts
+import { renderCheckoutPage } from "./pages/checkout/checkout.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Simple router for hash-based navigation
@@ -23,6 +28,10 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("hashchange", () => navigateTo(window.location.hash));
   navigateTo(window.location.hash || "#");
 });
+
+//checkout page code ends
+
+// product listing code starts
 
 /* MODAL CARD */
 
@@ -60,5 +69,4 @@ function closeModal(modal) {
     if (modal == null) return 
     modal.classList.remove('active')
     overlay.classList.remove('active')
-};
-
+}
