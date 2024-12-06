@@ -1,197 +1,109 @@
 import './filter.css';
+import '../product_listing/product_listing.js';
 
-let products = [];
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
-let displayProduct = async () => {
-  try {
-    let response = await fetch('https://fakestoreapi.com/products');
-    if (!response.ok) {
-      throw new Error('Network response was not ok ' + response.statusText);
-    }
-    products = await response.json();
-    
-    const productContainer = document.createElement('div');
-    productContainer.className = 'product-container';
-    
-    const filterContainer = document.createElement('div');
-    filterContainer.className = 'filter-container';
-    
-    // Get unique categories
-    const categories = [...new Set(products.map(item => item.category))];
-    
-    // Create category filter buttons
-    categories.forEach(category => {
-      const filterButton = document.createElement('label');
-      filterButton.className = 'filter-button';
-      filterButton.innerHTML = `
-        <input type="checkbox" value="${category}">
-        ${category}
-      `;
-      filterContainer.appendChild(filterButton);
-    });
-    
-    // Create sort select
-    const sortSelect = document.createElement('select');
-    sortSelect.id = 'sort-select';
-    sortSelect.innerHTML = `
-      <option value="default">Default</option>
-      <option value="price-asc">Price: Low to High</option>
-      <option value="price-desc">Price: High to Low</option>
-    `;
-    filterContainer.appendChild(sortSelect);
-    
-    // Create price range input
-    const priceRange = document.createElement('input');
-    priceRange.type = 'range';
-    priceRange.id = 'price-range';
-    priceRange.min = 0;
-    priceRange.max = Math.ceil(Math.max(...products.map(p => p.price)));
-    priceRange.value = priceRange.max;
-    filterContainer.appendChild(priceRange);
-    
-    const priceValue = document.createElement('span');
-    priceValue.id = 'price-value';
-    priceValue.textContent = `$${priceRange.value}`;
-    filterContainer.appendChild(priceValue);
-    
-    document.body.appendChild(filterContainer);
-    document.body.appendChild(productContainer);
-    
-    const displayFilteredProducts = () => {
-      const selectedCategories = Array.from(document.querySelectorAll('.filter-button input:checked'))
-        .map(checkbox => checkbox.value);
-      const sortValue = sortSelect.value;
-      const maxPrice = parseInt(priceRange.value);
-      
-      let filteredProducts = products.filter(product => 
-        (selectedCategories.length === 0 || selectedCategories.includes(product.category)) &&
-        product.price <= maxPrice
-      );
-      
-      if (sortValue === 'price-asc') {
-        filteredProducts.sort((a, b) => a.price - b.price);
-      } else if (sortValue === 'price-desc') {
-        filteredProducts.sort((a, b) => b.price - a.price);
-      }
-      
-      productContainer.innerHTML = '';
-      filteredProducts.forEach(item => {
-        const productElement = document.createElement('div');
-        productElement.className = 'product';
-        productElement.innerHTML = `
-          <h2>${item.title}</h2>
-          <img src="${item.image}" alt="${item.title}">
-          <p class="price">Price: $${item.price.toFixed(2)}</p>
-          <div class="description-container">
-            <p class="description">${item.description}</p>
-          </div>
-        `;
-        productContainer.appendChild(productElement);
+export function createFilterUI(products, containerElement, onFilterChange) {
+  const filterContainer = document.createElement("div");
+  filterContainer.className = "filter-container";
+
+  // Add "All Products" button
+  const allButton = document.createElement("button");
+  allButton.className = "filter-button active";
+  allButton.textContent = "All Products";
+  allButton.dataset.category = "";
+  filterContainer.appendChild(allButton);
+
+  // Unique categories from products
+  const categories = [...new Set(products.map(product => product.category))];
+
+  // Create category buttons
+  [allButton, ...categories.map(category => {
+    const button = document.createElement("button");
+    button.className = "filter-button";
+    button.textContent = capitalize(category);
+    button.dataset.category = category;
+    return button;
+  })].forEach(button => {
+    // Handle button click
+    button.addEventListener("click", () => {
+      // Remove 'active' class from all buttons
+      filterContainer.querySelectorAll(".filter-button").forEach(btn => {
+        btn.classList.remove("active");
       });
-    };
-    
-    // Initial display of all products
-    displayFilteredProducts();
-    
-    // Add event listeners
-    filterContainer.addEventListener('change', displayFilteredProducts);
-    sortSelect.addEventListener('change', displayFilteredProducts);
-    priceRange.addEventListener('input', () => {
-      priceValue.textContent = `$${priceRange.value}`;
-      displayFilteredProducts();
+      
+      // Toggle 'active' class on the clicked button
+      button.classList.add("active");
+      
+      onFilterChange(getFilterState()); // Trigger filter update
     });
-    
-  } catch (error) {
-    console.error('Error fetching product data: ', error);
-    const errorMessage = document.createElement('div');
-    errorMessage.className = 'error-message';
-    errorMessage.textContent = 'Unable to fetch products. Please try again later.';
-    document.body.appendChild(errorMessage);
+
+    filterContainer.appendChild(button);
+  });
+
+  // Sort dropdown
+  const sortSelect = document.createElement("select");
+  sortSelect.id = "sort-select";
+  sortSelect.innerHTML = `
+    <option value="default">Default</option>
+    <option value="price-asc">Price: Low to High</option>
+    <option value="price-desc">Price: High to Low</option>
+  `;
+  sortSelect.addEventListener("change", () => onFilterChange(getFilterState()));
+  filterContainer.appendChild(sortSelect);
+
+  // Price range slider
+  const maxPrice = Math.ceil(Math.max(...products.map(p => p.price)));
+  const priceRange = document.createElement("input");
+  priceRange.type = "range";
+  priceRange.min = 0;
+  priceRange.max = maxPrice;
+  priceRange.value = maxPrice;
+  priceRange.id = "price-range";
+
+  const priceValue = document.createElement("span");
+  priceValue.id = "price-value";
+  priceValue.textContent = `$${maxPrice}`;
+  priceRange.addEventListener("input", () => {
+    priceValue.textContent = `$${priceRange.value}`;
+    onFilterChange(getFilterState());
+  });
+
+  filterContainer.appendChild(priceRange);
+  filterContainer.appendChild(priceValue);
+
+  // Append the filter container to the DOM
+  containerElement.appendChild(filterContainer);
+
+  // Get the current filter state
+  function getFilterState() {
+    const selectedCategory = filterContainer.querySelector(".filter-button.active")?.dataset.category || "";
+
+    const sortValue = sortSelect.value;
+    const maxPrice = parseInt(priceRange.value, 10);
+
+    return { selectedCategory, sortValue, maxPrice };
   }
 }
 
-displayProduct();
+export function applyFilters(products, filterState) {
+  const { selectedCategory, sortValue, maxPrice } = filterState;
 
-
-
-/*
-// productFilter.js
-
-export function createFilterUI(products, containerElement, onFilterChange) {
-    const filterContainer = document.createElement('div');
-    filterContainer.className = 'filter-container';
-  
-    // Get unique categories
-    const categories = [...new Set(products.map(item => item.category))];
-  
-    // Create category filter buttons
-    categories.forEach(category => {
-      const filterButton = document.createElement('label');
-      filterButton.className = 'filter-button';
-      filterButton.innerHTML = `
-        <input type="checkbox" value="${category}">
-        ${category}
-      `;
-      filterContainer.appendChild(filterButton);
-    });
-  
-    // Create sort select
-    const sortSelect = document.createElement('select');
-    sortSelect.id = 'sort-select';
-    sortSelect.innerHTML = `
-      <option value="default">Default</option>
-      <option value="price-asc">Price: Low to High</option>
-      <option value="price-desc">Price: High to Low</option>
-    `;
-    filterContainer.appendChild(sortSelect);
-  
-    // Create price range input
-    const priceRange = document.createElement('input');
-    priceRange.type = 'range';
-    priceRange.id = 'price-range';
-    priceRange.min = 0;
-    priceRange.max = Math.ceil(Math.max(...products.map(p => p.price)));
-    priceRange.value = priceRange.max;
-    filterContainer.appendChild(priceRange);
-  
-    const priceValue = document.createElement('span');
-    priceValue.id = 'price-value';
-    priceValue.textContent = `$${priceRange.value}`;
-    filterContainer.appendChild(priceValue);
-  
-    containerElement.appendChild(filterContainer);
-  
-    // Add event listeners
-    filterContainer.addEventListener('change', () => onFilterChange(getFilterState()));
-    priceRange.addEventListener('input', () => {
-      priceValue.textContent = `$${priceRange.value}`;
-      onFilterChange(getFilterState());
-    });
-  
-    function getFilterState() {
-      const selectedCategories = Array.from(document.querySelectorAll('.filter-button input:checked'))
-        .map(checkbox => checkbox.value);
-      const sortValue = sortSelect.value;
-      const maxPrice = parseInt(priceRange.value);
-  
-      return { selectedCategories, sortValue, maxPrice };
-    }
-  }
-  
-  export function applyFilters(products, filterState) {
-    const { selectedCategories, sortValue, maxPrice } = filterState;
-  
-    let filteredProducts = products.filter(product => 
-      (selectedCategories.length === 0 || selectedCategories.includes(product.category)) &&
+  // Filter products by category and price range
+  let filteredProducts = products.filter(
+    product =>
+      (selectedCategory === "" || product.category === selectedCategory) &&
       product.price <= maxPrice
-    );
-  
-    if (sortValue === 'price-asc') {
-      filteredProducts.sort((a, b) => a.price - b.price);
-    } else if (sortValue === 'price-desc') {
-      filteredProducts.sort((a, b) => b.price - a.price);
-    }
-  
-    return filteredProducts;
+  );
+
+  // Sort products based on the selected sorting option
+  if (sortValue === "price-asc") {
+    filteredProducts.sort((a, b) => a.price - b.price);
+  } else if (sortValue === "price-desc") {
+    filteredProducts.sort((a, b) => b.price - a.price);
   }
-    */
+
+  return filteredProducts;
+}
