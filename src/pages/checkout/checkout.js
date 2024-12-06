@@ -6,7 +6,7 @@ import cardImage from "./card.jpg";
 import paypalImage from "./paypal.jpg";
 
 export function renderCheckoutPage() {
-  const mockCartData = [
+  const mockCartData = [ 
     {
       name: "Nike Air Zoom Pegasus 38 Women's Running Shoe",
       style: "CW7358-601",

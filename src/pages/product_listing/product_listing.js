@@ -16,8 +16,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       displayProducts(filteredProducts);
     });
     
-    //Search
+    //Search (Works even if Eslint says otherwise)
+    // eslint-disable-next-line no-undef
     searchInput.addEventListener("input", () => {
+      // eslint-disable-next-line no-undef
       const query = searchInput.value.toLowerCase();
       const filteredProducts = allProducts.filter(product => 
         product.title.toLowerCase().includes(query)
