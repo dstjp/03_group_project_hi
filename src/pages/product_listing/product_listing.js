@@ -3,7 +3,6 @@ import { fetchProducts } from "../../api.js";
 import { createFilterUI, applyFilters } from '../filter/filter.js';  // Import your filter functions
 
 
-let cart = [];  // Store cart items
 
 document.addEventListener("DOMContentLoaded", () => {
   init();
@@ -13,7 +12,6 @@ export async function init() {
   const productListContainer = document.getElementById("product-list");
   const filterContainer = document.getElementById("filter-container");  // Add this line
   const cart = new Cart('cart-container', 'cart-count'); // Pass the cart count ID
-  const products = await fetchProducts();
   let allProducts = [];  // Store all products
 
   try {
@@ -113,4 +111,4 @@ export async function init() {
       });
     });
   }
-});
+}
