@@ -1,111 +1,162 @@
-const button = `
-   <div>
-   <button class="shopping-cart-img" id="dropdownButton"> <svg 
-                width="24" 
-                height="29" 
-                viewBox="0 0 22 21" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg">
-                <path 
-                fill="black"/>
-                </svg></button>
-                <div id="dropdownMenu" class="dropdown-content">
-      <div id="cartItems"></div>
-      <div id="cartTotal">Total: $0</div>
-            </div>
-            </div>
-    `;
-    
-    import {  fetchProducts } from '../../api.js';
+import './shopping_cart.css';
 
+export default class Cart {
+  constructor(cartContainerId, cartCountId) {
+    this.cartItems = []; // Array to store cart items
+    this.cartContainer = document.getElementById(cartContainerId);
+    this.cartCount = document.getElementById(cartCountId);
+    this.initCartToggle();
+    this.renderCart();
+  }
 
-// Insert the HTML content into the div with id "shopping-cart"
-document.getElementById('shopping-cart').innerHTML = button;
+  // Initialize cart toggle for visibility
+  initCartToggle() {
+    const cartIcon = document.getElementById('cart-link');
+    if (cartIcon) {
+      cartIcon.addEventListener('click', (event) => {
+        event.preventDefault();
+        this.cartContainer.style.display =
+          this.cartContainer.style.display === 'block' ? 'none' : 'block';
+      });
+    }
+  }
 
-// Add event listener to the button to toggle the dropdown menu
-document.getElementById('dropdownButton').addEventListener('click', function() {
-  document.getElementById('dropdownMenu').classList.toggle('show');
-});
+  // Add a product to the cart
+  addToCart(product) {
+    const existingItem = this.cartItems.find((item) => item.id === product.id);
+    if (existingItem) {
+      existingItem.quantity += 1; // Increment quantity if product already exists
+    } else {
+      this.cartItems.push({ ...product, quantity: 1 }); // Add new product with quantity 1
+    }
+    this.updateCartCount();
+    this.renderCart();
+  }
 
-// Fetch product data from the API and display it
-fetch(fetchProducts)
-  .then(response => response.json())
-  .then(data => {
-    const productInfo = document.getElementById('productInfo');
-    const productHtml = `
-      <h2>${data.title}</h2>
-      <img src="${data.image}" alt="${data.title}" style="width:100px;height:100px;">
-      <p>${data.description}</p>
-      <p>Price: $${data.price}</p>
-    `;
-    productInfo.innerHTML = productHtml;
+  // Remove a product completely from the cart
+  removeFromCart(productId) {
+    this.cartItems = this.cartItems.filter((item) => item.id !== productId);
+    this.updateCartCount();
+    this.renderCart();
+  }
 
-    // Add event listener to the "Add to cart" button
-    document.getElementById('addToCartButton').addEventListener('click', function() {
-      const cartItems = document.getElementById('cartItems');
-      let cartItem = cartItems.querySelector(`.cart-item[data-id="${data.id}"]`);
-    
-      if (cartItem) {
-        updateQuantity(cartItem, 1);
+  // Update the quantity of a product
+  updateQuantity(productId, increment = true) {
+    const item = this.cartItems.find((item) => item.id === productId);
+    if (item) {
+      item.quantity = increment ? item.quantity + 1 : item.quantity - 1;
+      if (item.quantity <= 0) {
+        this.removeFromCart(productId); // Remove item if quantity goes to 0
       } else {
-        addItemToCart(data);
+        this.renderCart(); // Update the cart UI
       }
-    
-      updateCartTotal(data.price);
+    }
+    this.updateCartCount();
+  }
+
+  // Update the cart count badge
+  updateCartCount() {
+    const totalItems = this.cartItems.reduce((total, item) => total + item.quantity, 0);
+    this.cartCount.textContent = totalItems;
+  }
+
+  // Calculate total cost of the cart
+  calculateTotalCost() {
+    return this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+  }
+
+  // Render the cart UI
+  renderCart() {
+    this.cartContainer.innerHTML = `
+      <div class="cart-header">
+        <span class="cart-title">Shopping Cart</span>
+        <button class="close-cart-btn">&times;</button>
+      </div>
+      ${
+        this.cartItems.length
+          ? this.cartItems
+              .map(
+                (item) => `
+              <div class="cart-item">
+                <img src="${item.image}" alt="${item.title}" class="cart-item-image">
+                <div class="cart-item-details">
+                  <h4 class="cart-item-title">${item.title}</h4>
+                  <p class="cart-item-price">Price: $${item.price}</p>
+                  <p class="cart-item-quantity">
+                    Quantity:
+                    <button class="quantity-btn decrease" data-id="${item.id}">-</button>
+                    <span>${item.quantity}</span>
+                    <button class="quantity-btn increase" data-id="${item.id}">+</button>
+                  </p>
+                  <button class="remove-cart-item-btn" data-id="${item.id}">Remove</button>
+                </div>
+              </div>
+            `
+              )
+              .join("")
+          : `<p class="empty-cart-message">Your cart is empty.</p>`
+      }
+      ${
+        this.cartItems.length
+          ? `<div class="cart-total">Total: $${this.calculateTotalCost()}</div>
+             <button class="checkout-btn">Go to Checkout</button>
+            `
+          : ""
+      }
+    `;
+
+    // Attach event listeners for quantity buttons
+    const increaseButtons = this.cartContainer.querySelectorAll(".quantity-btn.increase");
+    const decreaseButtons = this.cartContainer.querySelectorAll(".quantity-btn.decrease");
+    const removeButtons = this.cartContainer.querySelectorAll(".remove-cart-item-btn");
+
+    increaseButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const productId = parseInt(button.dataset.id, 10);
+        this.updateQuantity(productId, true);
+      });
     });
 
-    function updateQuantity(cartItem, amount) {
-      const quantityElement = cartItem.querySelector('.quantity');
-      let quantity = parseInt(quantityElement.textContent);
-      quantityElement.textContent = quantity + amount;
-    }
-    
-    function updateCartTotal(amount) {
-      const cartTotal = document.getElementById('cartTotal');
-      let total = parseFloat(cartTotal.textContent) || 0;
-      total += amount;
-      cartTotal.textContent = total.toFixed(2);
-    }
-    
-    function addItemToCart(data) {
-      const cartItems = document.getElementById('cartItems');
-      const cartItemHtml = `
-        <div class="cart-item" data-id="${data.id}">
-          <p>${data.title} - $${data.price} x <span class="quantity">1</span></p>
-          <button class="removeFromCartButton">-</button>
-          <button class="increaseQuantityButton">+</button>
-          <button class="removeAllButton">Remove All</button>
-        </div>
-      `;
-      cartItems.insertAdjacentHTML('beforeend', cartItemHtml);
-    
-      const cartItem = cartItems.querySelector(`.cart-item[data-id="${data.id}"]`);
-      cartItem.querySelector('.removeFromCartButton').addEventListener('click', function() {
-        const quantityElement = cartItem.querySelector('.quantity');
-        let quantity = parseInt(quantityElement.textContent);
-    
-        if (quantity > 1) {
-          updateQuantity(cartItem, -1);
-        } else {
-          cartItem.remove();
-        }
-    
-        updateCartTotal(-data.price);
+    decreaseButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const productId = parseInt(button.dataset.id, 10);
+        this.updateQuantity(productId, false);
       });
-    
-      cartItem.querySelector('.increaseQuantityButton').addEventListener('click', function() {
-        updateQuantity(cartItem, 1);
-        updateCartTotal(data.price);
+    });
+
+    removeButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const productId = parseInt(button.dataset.id, 10);
+        this.removeFromCart(productId);
       });
-    
-      cartItem.querySelector('.removeAllButton').addEventListener('click', function() {
-        const quantityElement = cartItem.querySelector('.quantity');
-        const quantity = parseInt(quantityElement.textContent);
-        const itemTotalPrice = data.price * quantity;
-    
-        cartItem.remove();
-        updateCartTotal(-itemTotalPrice);
+    });
+
+    // Close button functionality
+    const closeButton = this.cartContainer.querySelector('.close-cart-btn');
+    if (closeButton) {
+      closeButton.addEventListener('click', () => {
+        this.cartContainer.style.display = 'none';
       });
     }
-  })
-  .catch(error => console.error('Error fetching product:', error));
+    // Attach event listener to checkout button
+    const checkoutButton = this.cartContainer.querySelector(".checkout-btn");
+    if (checkoutButton) {
+        checkoutButton.addEventListener("click", () => {
+        this.navigateToCheckout(); // Call navigation function
+        });
+    }
+}
+    // Navigate to checkout page
+    navigateToCheckout() {
+    // Dynamically load the checkout page JavaScript
+    import("../checkout/checkout.js")
+        .then((module) => {
+        const renderCheckout = module.default;
+        renderCheckout(); // Call the function exported from checkout.js
+        })
+        .catch((error) => {
+        console.error("Error loading checkout page:", error);
+        });
+    }
+}
+  
