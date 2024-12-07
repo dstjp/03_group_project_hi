@@ -1,17 +1,22 @@
-
 import './global.css'
 import './pages/product_listing/product_listing.css';
 import './pages/product_listing/product_listing.js';
-<<<<<<< Updated upstream
-//checkout page code starts
+
 import { renderCheckoutPage } from "./pages/checkout/checkout.js"; 
-=======
 import './pages/filter/filter.js';
 import './pages/shopping_cart/shopping_cart.js';
 //import Cart from "./pages/shopping_cart/shopping_cart.js";
 import { getCheckoutButton } from "./pages/shopping_cart/shopping_cart.js";
 import { renderCheckoutPage } from "./pages/checkout/checkout.js";
->>>>>>> Stashed changes
+
+import './pages/filter/filter.js';
+import './pages/shopping_cart/shopping_cart.js';
+import Cart from './pages/shopping_cart/shopping_cart.js';
+
+
+
+
+import { renderCheckoutPage } from "./pages/checkout/checkout.js";
 
 //const cart = new Cart("cart-container", "cart-count");
 
@@ -24,7 +29,7 @@ import { renderCheckoutPage } from "./pages/checkout/checkout.js";
             const cartData = JSON.parse(localStorage.getItem("cartItems")) || [];
             console.log("Cart Data:", cartData);
                 renderCheckoutPage(cartData);
-                //localStorage.removeItem("cartItems");
+                
        
         });
       } else {

@@ -124,22 +124,71 @@
     padding: 10px;
     border-radius: 6px;
 }
+
+/* Product Footer: Price and Cart Button Container */
+.product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Space out elements */
+    margin-top: 10px;
+    gap: 10px; /* Add spacing between elements */
+}
+
+/* SVG Container for the Price */
+.svg-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 80px;
+    width: 80px;
+}
+
+.svg-container svg {
+    height: 100%; /* Scale SVG to container */
+    width: 100%;
+}
+
+.svg-container .product-price {
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    font-size: 0.6rem; /* Adjust font size to fit inside SVG */
+    font-weight: bold;
+    color: #000000; /* Ensure contrast for readability */
+    text-align: center;
+    z-index: 10;
+}
+
+/* Add to Cart Button SVG */
+.add-to-cart-btn svg {
+    height: 50px;
+    width: 50px;
+    fill: #000000; /* Cart button color */
+    transition: transform 0.3s ease;
+}
+
+.add-to-cart-btn:hover svg {
+    transform: scale(1.2); /* Slight enlarge on hover */
+}
+
 /* Add to Cart Button */
 .add-to-cart-btn {
-    background-color: #27ae60; 
-    color: white;
+    background-color: transparent;
     border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    transition: transform 0.3s ease;
 }
-  
+
 .add-to-cart-btn:hover {
-    background-color: #219150; 
+    transform: scale(1.1); /* Slight enlarge on hover */
 }
+
 /* Horizontal Rule (hr) Styling */
 .product-card hr {
     border: none;
@@ -150,116 +199,23 @@
 }
 
 
-
-
-/*cart adding*/
-/* .add-to-cart-svg {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out;
-    margin-top: 15px;
-}
-
-.add-to-cart-svg:hover {
-    transform: scale(1.1); 
-}
-
-.add-to-cart-svg svg {
-    fill: #27ae60; 
-    width: 24px;
-    height: 24px;
-    transition: fill 0.3s ease;
-}
-
-.add-to-cart-svg:hover svg {
-    fill: #219150; 
-} */
-
-
-
-
-
-
-
-/* Filter Buttons Container */
-/* #filter-buttons {
-    display: flex;
-    justify-content: center; 
-    flex-wrap: wrap; 
-    gap: 10px; 
-    margin: 20px 0; 
-} */
-
-/* Individual Filter Button */
-/* .filter-btn {
-    background-color: #27ae60; 
-    color: white; 
-    border: none; 
-    border-radius: 5px; 
-    padding: 10px 20px; 
-    font-size: 1rem; 
-    cursor: pointer; 
-    transition: background-color 0.3s ease, transform 0.2s ease; 
-} */
-
-/* Hover Effect */
-/* .filter-btn:hover {
-    background-color: #219150; 
-    transform: scale(1.05);
-} */
-/* Active Button State */
-/* .filter-btn.active {
-    background-color: #1e8449; 
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); 
-} */
-/* Responsive Design: Smaller Screens */
-/* @media (max-width: 768px) {
-    #filter-buttons {
-      flex-direction: column; 
-      align-items: center; 
-    }
-    .filter-btn {
-      width: 80%; 
-      text-align: center;
-    }
-} */
-
-
-
-
-
-
-
-
-
-/* Dropdown Filter Styling */
-/* #filter-dropdown-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px;
-}
-
-#category-select {
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ddd;
+.cart-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #27ae60;
+    color: white;
+    padding: 10px 20px;
     border-radius: 5px;
-    width: 200px;
-    text-align: center;
-}
-  
-#category-select:focus {
-    border-color: #27ae60;
-    outline: none;
-}
-  
-label {
-    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     font-size: 1rem;
-    font-weight: bold;
-} */
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .cart-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
