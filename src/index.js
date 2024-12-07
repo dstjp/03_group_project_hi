@@ -1,35 +1,45 @@
 import './global.css'
 import './pages/product_listing/product_listing.css';
 import './pages/product_listing/product_listing.js';
+
+import { renderCheckoutPage } from "./pages/checkout/checkout.js"; 
+import './pages/filter/filter.js';
+import './pages/shopping_cart/shopping_cart.js';
+//import Cart from "./pages/shopping_cart/shopping_cart.js";
+import { getCheckoutButton } from "./pages/shopping_cart/shopping_cart.js";
+import { renderCheckoutPage } from "./pages/checkout/checkout.js";
+
 import './pages/filter/filter.js';
 import './pages/shopping_cart/shopping_cart.js';
 import Cart from './pages/shopping_cart/shopping_cart.js';
 
 
 
-//checkout page code starts
+
 import { renderCheckoutPage } from "./pages/checkout/checkout.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Simple router for hash-based navigation
-  function navigateTo(hash) {
-    switch (hash) {
-      case "#checkout":
-        renderCheckoutPage();
-        break;
-      // Add cases for other pages like product listing, cart, etc.
-      
-      default:
-        document.getElementById("app").innerHTML = "<h2>Welcome to our E-Commerce Site</h2>";
-    }
-  }
+//const cart = new Cart("cart-container", "cart-count");
 
-  // Load initial page based on hash
-  window.addEventListener("hashchange", () => navigateTo(window.location.hash));
-  navigateTo(window.location.hash || "#");
-});
 
-//checkout page code ends
+    const observeCheckoutButton = () => {
+      const checkoutbtn = getCheckoutButton();
+      if (checkoutbtn) {
+        console.log("Checkout button found:", checkoutbtn);
+        checkoutbtn.addEventListener("click", () => {
+            const cartData = JSON.parse(localStorage.getItem("cartItems")) || [];
+            console.log("Cart Data:", cartData);
+                renderCheckoutPage(cartData);
+                
+       
+        });
+      } else {
+        console.log("Checkout button not yet rendered. Waiting...");
+        setTimeout(observeCheckoutButton, 100);
+      }
+    };
+  
+    document.addEventListener("DOMContentLoaded", observeCheckoutButton);
+
 
 // product listing code starts
 
@@ -71,4 +81,3 @@ function closeModal(modal) {
     overlay.classList.remove('active')
 };
 
-//product listing code ends

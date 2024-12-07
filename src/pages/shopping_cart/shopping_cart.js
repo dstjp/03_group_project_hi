@@ -1,5 +1,16 @@
 import './shopping_cart.css';
 
+
+export function getCheckoutButton() {
+  return document.querySelector(".checkout-btn");
+}
+
+
+
+export default class Cart {
+  constructor(cartContainerId, cartCountId) {
+    //this.cartItems = []; // Array to store cart items, commented by priyanka
+    this.cartItems = JSON.parse(localStorage.getItem("cartItems")) || []; //added by priyanka
 export default class Cart {
   constructor(cartContainerId, cartCountId) {
     this.cartItems = []; // Array to store cart items
@@ -7,6 +18,7 @@ export default class Cart {
     this.cartCount = document.getElementById(cartCountId);
     this.initCartToggle();
     this.renderCart();
+
   }
 
   // Initialize cart toggle for visibility
@@ -31,6 +43,9 @@ export default class Cart {
     }
     this.updateCartCount();
     this.renderCart();
+
+    localStorage.setItem("cartItems", JSON.stringify(this.cartItems)); //added by priyanka
+
   }
 
   // Remove a product completely from the cart
@@ -38,6 +53,9 @@ export default class Cart {
     this.cartItems = this.cartItems.filter((item) => item.id !== productId);
     this.updateCartCount();
     this.renderCart();
+
+    localStorage.setItem("cartItems", JSON.stringify(this.cartItems)); //added by priyanka
+
   }
 
   // Update the quantity of a product
@@ -110,6 +128,7 @@ export default class Cart {
     const decreaseButtons = this.cartContainer.querySelectorAll(".quantity-btn.decrease");
     const removeButtons = this.cartContainer.querySelectorAll(".remove-cart-item-btn");
 
+
     increaseButtons.forEach((button) => {
       button.addEventListener('click', () => {
         const productId = parseInt(button.dataset.id, 10);
@@ -148,11 +167,19 @@ export default class Cart {
 }
     // Navigate to checkout page
     navigateToCheckout() {
+      this.cartContainer.style.display = "none";
+    import("../checkout/checkout.js")
+        .then((module) => {
+          const renderCheckoutPage = module.renderCheckoutPage;
+          const cartData = JSON.parse(localStorage.getItem("cartItems")) || [];
+          renderCheckoutPage(cartData); // Pass cart data to the checkout page
+
     // Dynamically load the checkout page JavaScript
     import("../checkout/checkout.js")
         .then((module) => {
         const renderCheckout = module.default;
         renderCheckout(); // Call the function exported from checkout.js
+
         })
         .catch((error) => {
         console.error("Error loading checkout page:", error);
