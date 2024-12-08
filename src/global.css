@@ -69,27 +69,49 @@ table {
   font-variant-numeric: tabular-nums;
 }
 
+/* HERO */
+
+body {
+  background-color: #FFFFFF;
+}
+
+.hero {
+
+  margin-top: -1rem;
+}
+
+
 /* HEADER */
 
 header {
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.453);
+  background-color: white;
+  position: sticky;
+  top: 0;
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.305);
 }
 
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 0.3rem;
-  padding-top: 0.3rem;
+  padding: 1rem;
+  margin-bottom: 0.25rem;
+  
 }
 
 
+
+
+@import url('https://fonts.googleapis.com/css2?family=Arya:wght@400;700&family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Bodoni+Moda+SC:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poiret+One&display=swap');
+
+
+
 .page-title {
-  text-transform: uppercase;
   color: black;
+  font-size: 1.5rem;
+  font-family: 'Bodoni Moda SC', sans-serif;
+  font-weight: 600;
   margin-left: 1rem;
-  font-size: 1.25rem;
-  font-weight: bold;
 }
 
 .page-title a:hover, a:visited, a:link, a:active {
@@ -98,40 +120,30 @@ header {
 
 @media (max-width:850px) {
   .page-title {
-    font-size: 1rem;
-  }
-  .categories-img {
-    margin-right: 1rem;
+    font-size: 1.25rem;
   }
 }
 
 .shopping-cart-img {
-  padding-right: 2rem;
+  margin-right: 1rem;
 }
 
 .searchbar-container {
-  display: flex;
-  width: 50%;
+  width: 80%;
 }
 
 .searchbar {
-  border-radius: 10px;
   border: none;
-  background-color: rgb(232, 229, 229);
+  border-bottom: 1px solid black;
+  background-color: #F9F9F9;
   padding: 0.5rem;
   flex-grow: 1;
+  width: 100%;
+  outline: none;
 }
 
-.search-btn {
-  margin-left: 0.25rem;
-  border: none;
-  border-radius: 10px;
-  padding: 0.5rem;
-  background: #591212;
-  color: white;
-  font-size: 14px;
-  font-weight: bold;
-
+.searchbar:active, .searchbar:hover {
+  background-color: #f2f1f1;
 }
 
 

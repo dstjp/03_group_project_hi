@@ -9,7 +9,7 @@
 <body>
     <header>
         <div class="navbar">
-            <a href="#home">
+            <a href="javascript:location.reload()">
                 <div class="page-title">JD Top</div>
             </a>
             <div class="searchbar-container">
@@ -33,18 +33,24 @@
         </div>
     </header>
 
+    <div id="checkout-section" style="display: none;">
+        <div id="app"></div>
+    </div>
+
+    <div class="hero">
+        <img src="/src/03_banner.avif" alt="" class="hero-img">
+    </div>
+
+
         <main>
             <div id="product-listing-section">
-            <section>
-                <div id="filter-container"></div>
-                <div id="product-list" class="product-listing"></div>
-            </section>
-        </div>
+                <section>
+                    <div id="filter-container"></div>
+                    <div id="product-list" class="product-listing"></div>
+                </section>
+            </div>
         </main>
- <!-- Adding a container for checkout feature -->
- <div id="checkout-section" style="display: none;">
-    <div id="app"></div>
-</div>
+         <!-- Container for checkout feature -->
     <footer>
         © 2024 JD Top Inc. All rights Reserved.
     </footer>

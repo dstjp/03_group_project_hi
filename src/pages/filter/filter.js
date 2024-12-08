@@ -9,13 +9,13 @@ export function createFilterUI(products, containerElement, onFilterChange) {
 
     // Define background colors for categories
     const categoryColors = {
-      electronics: "#f4a261",
-      jewelery: "#2a9d8f",
-      "men's clothing": "#264653",
-      "women's clothing": "#e76f51",
+      electronics: "#F9F9F9",
+      jewelery: "#F9F9F9",
+      "men's clothing": "#F9F9F9",
+      "women's clothing": "#F9F9F9;",
     };
 
-  // Unique categories from products          
+  // Unique categories from products
   const categories = [...new Set(products.map(product => product.category))];
 
   // Create category buttons
@@ -48,6 +48,25 @@ export function createFilterUI(products, containerElement, onFilterChange) {
   sortSelect.addEventListener("change", () => onFilterChange(getFilterState()));
   filterContainer.appendChild(sortSelect);
 
+  // Price range slider
+  const maxPrice = Math.ceil(Math.max(...products.map(p => p.price)));
+  const priceRange = document.createElement("input");
+  priceRange.type = "range";
+  priceRange.min = 0;
+  priceRange.max = maxPrice;
+  priceRange.value = maxPrice;
+  priceRange.id = "price-range";
+
+  const priceValue = document.createElement("span");
+  priceValue.id = "price-value";
+  priceValue.textContent = `$${maxPrice}`;
+  priceRange.addEventListener("input", () => {
+    priceValue.textContent = `$${priceRange.value}`;
+    onFilterChange(getFilterState());
+  });
+
+  filterContainer.appendChild(priceRange);
+  filterContainer.appendChild(priceValue);
 
   // Append the filter container to the DOM
   containerElement.appendChild(filterContainer);
@@ -58,7 +77,6 @@ export function createFilterUI(products, containerElement, onFilterChange) {
       .map(button => button.dataset.category);
 
     const sortValue = sortSelect.value;
-    // eslint-disable-next-line no-undef
     const maxPrice = parseInt(priceRange.value, 10);
 
     return { selectedCategories, sortValue, maxPrice };
