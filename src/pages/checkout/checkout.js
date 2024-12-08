@@ -1,54 +1,48 @@
-import "./checkout.css"; // Importing styles
-import shoeImage from "./shoe.jpg";
+import "./checkout.css"; 
 import klarnaImage from "./klarna.jpg";
 import swishImage from "./swish.jpg";
 import cardImage from "./card.jpg";
 import paypalImage from "./paypal.jpg";
+import Cart from "../shopping_cart/shopping_cart.js";
 
-export function renderCheckoutPage() {
-  const mockCartData = [ 
-    {
-      name: "Nike Air Zoom Pegasus 38 Women's Running Shoe",
-      style: "CW7358-601",
-      size: 8,
-      color: "Champagne/Barely Rose/Arctic Pink/White",
-      qty: 1,
-      price: 120.00,
-      image: shoeImage,
-      deliveryDate: "Thu, Jun 24"
-    },
-    {
-      name: "Adidas Ultraboost 22 Men's Running Shoe",
-      style: "AB1234-789",
-      size: 10,
-      color: "Core Black/Cloud White",
-      qty: 1,
-      price: 180.00,
-      image: shoeImage, 
-      deliveryDate: "Fri, Jun 25"
-    }
-    
-  ];
+const productListingSection = document.getElementById("product-listing-section");
+const checkoutSection = document.getElementById("checkout-section");
+
+export function renderCheckoutPage(cartData) {
+   // Validate if cart data is available
+   if (!cartData || cartData.length === 0) {
+    console.error("Cart data is empty or unavailable.");
+    return;
+  }
 
   const app = document.getElementById("app"); 
   const checkoutContainer = document.createElement("div");
   checkoutContainer.className = "checkout-container";
 
+  // Hide product listing and show checkout
+  productListingSection.style.display = "none";
+ //new code
+  const cartSection = document.getElementById("cart-container");
+    if (cartSection) {
+        cartSection.style.display = "none";
+    }
+    //ends here
+  checkoutSection.style.display = "block";
+
   let bagItemsHTML = "";
   let subtotal = 0;
 
-  mockCartData.forEach((item) => {
-    subtotal += item.price * item.qty;
+  // Loop through cart data to generate checkout items
+  cartData.forEach((item) => {
+    subtotal += item.price * item.quantity; // Adjusted to use `quantity` from shopping-cart.js
     bagItemsHTML += `
       <div class="product-details">
-        <img src="${item.image}" alt="${item.name}" />
+        <img src="${item.image}" alt="${item.title}" />
         <div class="product-info">
-          <h4>${item.name}</h4>
-          <p>Style #: ${item.style}</p>
-          <p>Size: ${item.size}</p>
-          <p>Color: ${item.color}</p>
-          <p>Qty: ${item.qty} @ $${item.price.toFixed(2)}</p>
-          <p><strong>$${(item.price * item.qty).toFixed(2)}</strong></p>
+          <h4>${item.title}</h4>
+          <p>Style #: ${item.id}</p>
+          <p>Qty: ${item.quantity} @ $${item.price.toFixed(2)}</p>
+          <p><strong>$${(item.price * item.quantity).toFixed(2)}</strong></p>
         </div>
       </div>
     `;
@@ -164,7 +158,7 @@ export function renderCheckoutPage() {
       </div>
       <div class="divider"></div>
       <div class="arrival-info">
-        <p><strong>Arrives by ${mockCartData[0].deliveryDate}</strong></p>
+       
         ${bagItemsHTML}
       </div>
     </aside>
@@ -211,8 +205,14 @@ function handleFormSubmit(event) {
     document.body.style.opacity = '1';
     document.getElementById('dialog-container').style.display = 'none';
   
+     // Clear cart data after order confirmation
+     localStorage.removeItem("cartItems");
+     //new code
+     const cartInstance = new Cart("cart-container", "cart-count");
+     cartInstance.renderCart();
+     //ends here
 
-  // Reset forms to their initial state
+  
   document.getElementById("checkout-form").reset();
   document.getElementById("payment-form").reset();
   
@@ -220,26 +220,13 @@ function handleFormSubmit(event) {
   paymentRadios.forEach((radio) => {
     radio.checked = false;
   });
+  
 
-  // Scroll back to the top of the form (optional for better user experience)
-  document.getElementById("app").scrollIntoView({ behavior: "smooth" });
+  productListingSection.style.display = "block"; 
+    checkoutSection.style.display = "none"; 
+
+    productListingSection.scrollIntoView({ behavior: "smooth" });
 }, 3000);
 
-
-//for my practice
-
-//   const name = document.getElementById("name").value;
-//  const email = document.getElementById("email").value;
-//   const address = document.getElementById("address").value;
-//   // const paymentMethod = document.getElementById("payment-method").value;
-
-//   // Simulate order placement
-//   console.log("Order Summary:");
-//   console.log(`Name: ${name}`);
-//   console.log(`Email: ${email}`);
-//   console.log(`Address: ${address}`);
-//   // console.log(`Payment Method: ${paymentMethod}`);
-
-//   //alert("Order placed successfully!");
 }
 
