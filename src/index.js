@@ -28,3 +28,5 @@ import { renderCheckoutPage } from "./pages/checkout/checkout.js";
   
     document.addEventListener("DOMContentLoaded", observeCheckoutButton);
 
+ 
+
