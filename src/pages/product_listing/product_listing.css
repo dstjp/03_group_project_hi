@@ -1,11 +1,11 @@
-
 /* Product Listing Grid */
 .product-listing {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px; 
-    padding: 20px; 
+    padding: 20px;
+    background-color: #f9f9f9; 
 }
 
 /* Individual Product Card */
@@ -20,21 +20,16 @@
     width: 250px; 
     min-height: 400px;
     background-color: #fff;
-    text-align: center; /* Center align text */
+    text-align: center;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* .product-card:hover {
-    transform: scale(1.05); 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
-} */
+
 
 /* Product Image */
 .product-image {
     max-width: 100%;
     height: 150px;
-    /* border-radius: 6px;
-    margin-bottom: 12px; */
     object-fit: contain; 
     transition: transform 0.2s ease-in-out; 
 }
@@ -49,11 +44,7 @@
     font-weight: bold;
     margin: 10px 0;
     color: #333; 
-    /* text-align: center;
-    height: 40px;
-    overflow: hidden;
-    text-overflow: ellipsis;  */
-    height: 40px;
+    height: auto;
     text-align: center;
     overflow: auto;
     word-wrap: break-word;
@@ -62,7 +53,6 @@
 
 /* Product Description */
 .product-description {
-    
     font-size: 0.9rem;
     color: #666; 
     margin: 10px 0;
@@ -72,23 +62,6 @@
     overflow: auto;
     word-wrap: break-word;
     scrollbar-width: thin;
-    /* overflow: hidden; Hide overflow text */
-    /* text-overflow: ellipsis; Add ellipsis for long text */
-    /* white-space: normal; */
-}
-
-/* Product Title Scrollbar*/
-.product-title::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-.product-title::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 3px;
-}
-
-.product-title::-webkit-scrollbar-thumb:hover {
-    background-color: #aaa;
 }
 
 /* Product Description Scrollbar*/
@@ -105,16 +78,9 @@
     background-color: #aaa;
 }
 
-/* Product Price */
-.product-price {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #27ae60;
-}
-
 /* Error Message Styling */
 .error-message {
-    color: red;
+    color: #ff0000;
     font-size: 1.2em;
     text-align: center;
     margin: 20px 0;
@@ -127,9 +93,8 @@
 .product-footer {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Space out elements */
+    justify-content: space-between; 
     margin-top: 10px;
-    gap: 10px; /* Add spacing between elements */
 }
 
 /* SVG Container for the Price */
@@ -138,13 +103,13 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    height: 80px;
-    width: 80px;
+    height: 110px;
+    width: 110px;
 }
 
 .svg-container svg {
-    height: 100%; /* Scale SVG to container */
-    width: 100%;
+    height: 100%;
+    width: 150%;
 }
 
 .svg-container .product-price {
@@ -152,9 +117,9 @@
     top: 50%;
     left: 55%;
     transform: translate(-50%, -50%);
-    font-size: 0.6rem; /* Adjust font size to fit inside SVG */
-    font-weight: bold;
-    color: #000000; /* Ensure contrast for readability */
+    font-size: 0.7rem; 
+    font-weight: 800;
+    color: #000000;
     text-align: center;
     z-index: 10;
 }
@@ -163,12 +128,12 @@
 .add-to-cart-btn svg {
     height: 50px;
     width: 50px;
-    fill: #000000; /* Cart button color */
+    fill: #000000; 
     transition: transform 0.3s ease;
 }
 
 .add-to-cart-btn:hover svg {
-    transform: scale(1.2); /* Slight enlarge on hover */
+    transform: scale(1.2); 
 }
 
 /* Add to Cart Button */
@@ -184,10 +149,10 @@
 }
 
 .add-to-cart-btn:hover {
-    transform: scale(1.1); /* Slight enlarge on hover */
+    transform: scale(1.1);
 }
 
-/* Horizontal Rule (hr) Styling */
+/*hr Styling */
 .product-card hr {
     border: none;
     border-top: 1px solid #ddd;
@@ -211,9 +176,9 @@
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.3s ease, transform 0.3s ease;
-  }
+}
   
-  .cart-notification.show {
+.cart-notification.show {
     opacity: 1;
     transform: translateY(0);
-  }
+}

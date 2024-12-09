@@ -1,19 +1,9 @@
 import './filter.css';
 import '../product_listing/product_listing.js';
 
-// productFilter.js
-
 export function createFilterUI(products, containerElement, onFilterChange) {
   const filterContainer = document.createElement("div");
   filterContainer.className = "filter-container";
-
-    // Define background colors for categories
-    const categoryColors = {
-      electronics: "#F9F9F9",
-      jewelery: "#F9F9F9",
-      "men's clothing": "#F9F9F9",
-      "women's clothing": "#F9F9F9;",
-    };
 
   // Unique categories from products
   const categories = [...new Set(products.map(product => product.category))];
@@ -25,13 +15,10 @@ export function createFilterUI(products, containerElement, onFilterChange) {
     button.textContent = capitalize(category);
     button.dataset.category = category;
 
-     // Assign background color based on category
-     button.style.backgroundColor = categoryColors[category] || "#ccc"; // Default color if category is missing
-
     // Handle button click
     button.addEventListener("click", () => {
-      button.classList.toggle("active"); // Toggle active class
-      onFilterChange(getFilterState()); // Trigger filter update
+      button.classList.toggle("active"); 
+      onFilterChange(getFilterState()); 
     });
 
     filterContainer.appendChild(button);

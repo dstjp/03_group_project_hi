@@ -1,13 +1,13 @@
 import Cart from "../shopping_cart/shopping_cart.js";
+import './product_listing.css'
 import { fetchProducts } from "../../api.js";
 import { createFilterUI, applyFilters } from '../filter/filter.js';  // Import your filter functions
 
 document.addEventListener("DOMContentLoaded", async () => {
   const productListContainer = document.getElementById("product-list");
-  const filterContainer = document.getElementById("filter-container");  // Add this line
-  const cart = new Cart('cart-container', 'cart-count'); // Pass the cart count ID
-  /* const products = await fetchProducts(); */
-  let allProducts = [];  // Store all products
+  const filterContainer = document.getElementById("filter-container");
+  const cart = new Cart('cart-container', 'cart-count'); 
+  let allProducts = [];
 
   try {
     // Fetch all products
@@ -44,9 +44,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div class="product-card">
           <img src="${product.image}" alt="${product.title}" class="product-image">
           <hr>
-          <h3 class="product-title">${product.title}</h3>
+          <h3 class="product-title">${product.title.split(' ').slice(0,3).join(' ')}</h3>
           <hr>
-          <p class="product-description">${product.description.slice(0, 100)}...</p>
+          <p class="product-description">${product.description.slice(0, 500)}...</p>
           <hr>
           <div class="product-footer">
                 <div class="svg-container">
@@ -82,15 +82,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Attach "Add to Cart" event listeners
     const addToCartButtons = productListContainer.querySelectorAll(".add-to-cart-btn");
     function showNotification(message) {
-      console.log("Notification triggered:", message); // Debug
+      console.log("Notification triggered:", message);
       const notification = document.createElement("div");
       notification.className = "cart-notification";
       notification.textContent = message;
     
-      // Append notification to the body
+      // Adding the notification to the body
       document.body.appendChild(notification);
     
-      // Add a class for animation (if needed)
       setTimeout(() => {
         notification.classList.add("show");
       }, 10);
@@ -104,9 +103,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     addToCartButtons.forEach((button) => {
       button.addEventListener("click", () => {
         const productId = parseInt(button.dataset.id, 10);
-        console.log("Button clicked. Product ID:", productId); // Debug
+        console.log("Button clicked. Product ID:", productId); 
         const product = products.find((p) => p.id === productId);
-        console.log("Product found:", product); // Debug
+        console.log("Product found:", product);
         if (product) {
           cart.addToCart(product);
           showNotification(`${product.title} added to the cart!`);
@@ -115,6 +114,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 });
-
-
-//Search
