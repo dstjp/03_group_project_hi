@@ -5,10 +5,8 @@ export function createFilterUI(products, containerElement, onFilterChange) {
   const filterContainer = document.createElement("div");
   filterContainer.className = "filter-container";
 
-  // Unique categories from products
   const categories = [...new Set(products.map(product => product.category))];
 
-  // Create category buttons
   categories.forEach(category => {
     const button = document.createElement("button");
     button.className = "filter-button";
@@ -35,7 +33,7 @@ export function createFilterUI(products, containerElement, onFilterChange) {
   sortSelect.addEventListener("change", () => onFilterChange(getFilterState()));
   filterContainer.appendChild(sortSelect);
 
-  // Price range slider
+  // Price range slider (NOT SHOWN)
   const maxPrice = Math.ceil(Math.max(...products.map(p => p.price)));
   const priceRange = document.createElement("input");
   priceRange.type = "range";
@@ -55,10 +53,9 @@ export function createFilterUI(products, containerElement, onFilterChange) {
   filterContainer.appendChild(priceRange);
   filterContainer.appendChild(priceValue);
 
-  // Append the filter container to the DOM
+
   containerElement.appendChild(filterContainer);
 
-  // Get the current filter state
   function getFilterState() {
     const selectedCategories = Array.from(filterContainer.querySelectorAll(".filter-button.active"))
       .map(button => button.dataset.category);
@@ -69,7 +66,6 @@ export function createFilterUI(products, containerElement, onFilterChange) {
     return { selectedCategories, sortValue, maxPrice };
   }
 
-  // Capitalize category names
   function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
@@ -78,14 +74,13 @@ export function createFilterUI(products, containerElement, onFilterChange) {
 export function applyFilters(products, filterState) {
   const { selectedCategories, sortValue, maxPrice } = filterState;
 
-  // Filter products by categories and price range
+  
   let filteredProducts = products.filter(
     product =>
       (selectedCategories.length === 0 || selectedCategories.includes(product.category)) &&
       product.price <= maxPrice
   );
 
-  // Sort products based on the selected sorting option
   if (sortValue === "price-asc") {
     filteredProducts.sort((a, b) => a.price - b.price);
   } else if (sortValue === "price-desc") {
