@@ -85,7 +85,7 @@ width: 100%;
 
 header {
   background-color: white;
-  position: sticky;
+  position: relative;
   top: 0;
   box-shadow: 1px 1px rgba(0, 0, 0, 0.305);
 }
