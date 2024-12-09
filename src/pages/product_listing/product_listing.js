@@ -1,4 +1,5 @@
 import Cart from "../shopping_cart/shopping_cart.js";
+import './product_listing.css'
 import { fetchProducts } from "../../api.js";
 import { createFilterUI, applyFilters } from '../filter/filter.js';  // Import your filter functions
 
@@ -6,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const productListContainer = document.getElementById("product-list");
   const filterContainer = document.getElementById("filter-container");  // Add this line
   const cart = new Cart('cart-container', 'cart-count'); // Pass the cart count ID
-  const products = await fetchProducts();
+  // const products = await fetchProducts();
   let allProducts = [];  // Store all products
 
   try {
@@ -33,9 +34,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div class="product-card">
           <img src="${product.image}" alt="${product.title}" class="product-image">
           <hr>
-          <h3 class="product-title">${product.title}</h3>
+          <h3 class="product-title">${product.title.split(' ').slice(0,3).join(' ')}</h3>
           <hr>
-          <p class="product-description">${product.description.slice(0, 100)}...</p>
+          <p class="product-description">${product.description.slice(0, 500)}...</p>
           <hr>
           <div class="product-footer">
                 <div class="svg-container">
