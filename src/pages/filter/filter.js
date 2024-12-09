@@ -9,10 +9,10 @@ export function createFilterUI(products, containerElement, onFilterChange) {
 
     // Define background colors for categories
     const categoryColors = {
-      electronics: "#f4a261",
-      jewelery: "#2a9d8f",
-      "men's clothing": "#264653",
-      "women's clothing": "#e76f51",
+      electronics: "#F9F9F9",
+      jewelery: "#F9F9F9",
+      "men's clothing": "#F9F9F9",
+      "women's clothing": "#F9F9F9;",
     };
 
   // Unique categories from products

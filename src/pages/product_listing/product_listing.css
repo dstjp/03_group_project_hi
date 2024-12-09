@@ -4,8 +4,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px; 
-    padding: 20px;
-    background-color: #f9f9f9; 
+    padding: 20px; 
 }
 
 /* Individual Product Card */
@@ -22,7 +21,6 @@
     background-color: #fff;
     text-align: center;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    /* position: relative; */
 }
 
 /* .product-card:hover {

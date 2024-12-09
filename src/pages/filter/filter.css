@@ -1,64 +1,65 @@
-/* Filter Container */
+
 .filter-container {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 1.25rem;
-    margin: 1.25rem 0;
-    padding: 1.25rem;
-    background-color: #f0f0f0;
-    border-radius: 0.5rem;
+    gap: 1rem;
+    margin: 1rem;
+    padding: 1rem;
 }
 
-/* Filter Button */
+
 .filter-button {
     display: inline-flex;
     justify-content: center;
     align-items: center;
     padding: 10px 15px;
-    background-color: #591212; 
-    color: white; 
+    color: black; 
     border: none; 
-    border-radius: 5px;
+    border-bottom: 1px solid #000000;
+    background-color: #F9F9F9;
+    border-radius: 1px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
 }
-.filter-button:focus {
-    outline: 2px solid #e44d26; /* Highlight focused button */
-    outline-offset: 2px;
-}
+
 .filter-button.active {
-    background-color: #e44d26;
+    background-color: #c4c2c2;
     transform: scale(1.1);
     transition: background-color 0.3s, transform 0.2s ease-in-out;
+    outline: none;
 }
 
-.filter-button:hover {
-    background-color: #e0e0e0; /* Lighter hover effect */
-    color: #333333; /* Darker text for better contrast */
+
+#sort-select {
+    padding: 10px;
+    border-radius: 1px;
+    border: none;
+    border-bottom: 1px solid black;
+    background-color: #F9F9F9;
+    cursor: pointer;
 }
 
 /* Sort and Price Range */
-#sort-select, #price-range {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    background-color: #ffffff;
+#price-range, #price-value {
+    display: none;
 }
+
 
 #price-value {
     font-weight: bold;
     margin-left: 10px;
     color: #591212;
+    
 }
 
 .error-message {
-    position: relative; /* Position for dismiss button */
-    padding: 10px 40px 10px 10px; /* Space for dismiss button */
+    position: relative; 
+    padding: 10px 40px 10px 10px; 
 }
 
 .error-message::after {
-    content: "✖"; /* Dismiss symbol */
+    content: "✖"; 
     position: absolute;
     top: 50%;
     right: 10px;
@@ -68,16 +69,16 @@
     font-size: 1.2rem;
 }
 
-/* Responsive Layout */
+
 @media (max-width: 768px) {
     .filter-container {
         flex-direction: column;
-        align-items: center; /* Ensure proper alignment */
-        padding: 10px; /* Add spacing for mobile */
+        align-items: center; 
+        padding: 10px; 
     }
 
     .filter-button {
-        width: 100%; /* Make buttons full-width on smaller screens */
-        margin-bottom: 10px; /* Add spacing between buttons */
+        width: 100%; 
+        margin-bottom: 10px; 
     }
 }
