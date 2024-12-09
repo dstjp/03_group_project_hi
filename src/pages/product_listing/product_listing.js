@@ -122,7 +122,7 @@ export async function init() {
       });
     });
   }
-});
+}
 
 
 //Search
