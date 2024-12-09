@@ -1,4 +1,4 @@
-/* Cart Container */
+
 #cart-container {
     position: fixed; 
     right: 1.5rem; 
@@ -26,6 +26,7 @@
     font-size: 0.8rem;
     font-weight: bold;
   }
+
   #cart-container .cart-header {
     display: flex;
     justify-content: space-between;
