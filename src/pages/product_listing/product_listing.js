@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const productListContainer = document.getElementById("product-list");
   const filterContainer = document.getElementById("filter-container");  // Add this line
   const cart = new Cart('cart-container', 'cart-count'); // Pass the cart count ID
-  const products = await fetchProducts();
+  /* const products = await fetchProducts(); */
   let allProducts = [];  // Store all products
 
   try {
@@ -18,6 +18,17 @@ document.addEventListener("DOMContentLoaded", async () => {
       const filteredProducts = applyFilters(allProducts, filterState);
       displayProducts(filteredProducts);
     });
+    
+    //Search (Works even if Eslint says otherwise)
+    // eslint-disable-next-line no-undef
+    searchInput.addEventListener("input", () => {
+      // eslint-disable-next-line no-undef
+      const query = searchInput.value.toLowerCase();
+      const filteredProducts = allProducts.filter(product => 
+        product.title.toLowerCase().includes(query)
+      );
+      displayProducts(filteredProducts)
+    })
 
     // Initial display of all products
     displayProducts(allProducts);
@@ -104,3 +115,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 });
+
+
+//Search

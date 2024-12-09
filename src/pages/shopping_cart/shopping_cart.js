@@ -68,7 +68,7 @@ export default class Cart {
   renderCart() {
     this.cartContainer.innerHTML = `
       <div class="cart-header">
-        <span class="cart-title">Shopping Cart</span>
+        <span class="cart-title">Cart</span>
         <button class="close-cart-btn">&times;</button>
       </div>
       ${
