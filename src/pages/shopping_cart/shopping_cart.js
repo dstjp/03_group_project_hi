@@ -31,6 +31,7 @@ export default class Cart {
     } else {
       this.cartItems.push({ ...product, quantity: 1 });
     }
+    
     this.updateCartCount();
     this.renderCart();
     localStorage.setItem("cartItems", JSON.stringify(this.cartItems));
