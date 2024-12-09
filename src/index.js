@@ -4,60 +4,12 @@ import './pages/product_listing/product_listing.js';
 import './pages/filter/filter.js';
 import './pages/shopping_cart/shopping_cart.js';
 
-
-
-//checkout page code starts
+import { getCheckoutButton } from "./pages/shopping_cart/shopping_cart.js";
 import { renderCheckoutPage } from "./pages/checkout/checkout.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Simple router for hash-based navigation
-  function navigateTo(hash) {
-    switch (hash) {
-      case "#checkout":
-        renderCheckoutPage();
-        break;
-      // Add cases for other pages like product listing, cart, etc.
-      
-      default:
-        document.getElementById("app").innerHTML = "<h2>Welcome to our E-Commerce Site</h2>";
-    }
-  }
 
-  // Load initial page based on hash
-  window.addEventListener("hashchange", () => navigateTo(window.location.hash));
-  navigateTo(window.location.hash || "#");
-});
 
-//checkout page code ends
 
-// product listing code starts
-
-/* MODAL CARD */
-
-const openModalButtons = document.querySelectorAll('[data-modal-target]')
-const closeModalButtons = document.querySelectorAll('[data-close-button]')
-const overlay = document.getElementById('overlay')
-
-openModalButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const modal = document.querySelector(button.dataset.modalTarget)
-        openModal(modal)
-    })
-})
-
-overlay.addEventListener('click', () => {
-    const modals = document.querySelectorAll('.modal.active')
-    modals.forEach(modal => {
-        closeModal(modal)
-    })
-})
-
-closeModalButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const modal = button.closest('.modal')
-        closeModal(modal)
-    })
-})
 
 function openModal(modal) {
     if (modal == null) return 
@@ -69,3 +21,22 @@ function closeModal(modal) {
     modal.classList.remove('active')
     overlay.classList.remove('active')
 }
+    const observeCheckoutButton = () => {
+      const checkoutbtn = getCheckoutButton();
+      if (checkoutbtn) {
+        console.log("Checkout button found:", checkoutbtn);
+        checkoutbtn.addEventListener("click", () => {
+            const cartData = JSON.parse(localStorage.getItem("cartItems")) || [];
+            console.log("Cart Data:", cartData);
+                renderCheckoutPage(cartData);
+                localStorage.removeItem("cartItems");
+       
+        });
+      } else {
+        console.log("Checkout button not yet rendered. Waiting...");
+        setTimeout(observeCheckoutButton, 100);
+      }
+    };
+  
+    document.addEventListener("DOMContentLoaded", observeCheckoutButton);
+

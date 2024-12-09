@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="./pages/img/1.png">
     <title>JD TOP</title>
-    <script src="https://kit.fontawesome.com/4eecd19e53.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -15,28 +14,11 @@
     
     <header>
         <div class="navbar">
-            <div class="title-categories-container">
-            <a href="#">
-                <h2 class="shopler">JD TOP</h2>
+            <a href="javascript:location.reload()">
+                <div class="page-title">JD Top</div>
             </a>
-            <a  data-modal-target="#modal"><svg 
-                class="categories-img"
-                width="25" 
-                height="45" 
-                viewBox="0 0 20 12" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg">
-                <path 
-                    d="M1 1H19M1 6H19M1 11H19" 
-                    stroke="#292D32" stroke-width="1.5" 
-                    stroke-linecap="round"
-                />
-                </svg>
-            </a>
-            </div>
             <div class="searchbar-container">
-                <input class="searchbar" type="text" placeholder="Search by category or title...">
-                <i class="fas fa-search"></i>
+                <input class="searchbar" id="searchInput" type="text" placeholder="Search by category or title...">
             </div>
             <div class="shopping-cart-img">
                 <a  href="#" id="cart-link"><svg 
@@ -56,33 +38,26 @@
         </div>
     </header>
 
-    <div class="modal" id="modal">
-        <div class="modal-header">
-            <div class="title">Choose your category</div>
-            <button data-close-button class="close-button">&times;</button>
-        </div>
-        <div class="modal-body">
-            <ul>
-                <li><a href="#" data-id="All">All</a></li>
-                <li><a href="#" data-id="">Clothing</a></li>
-                <li><a href="#" data-id="">Electronics</a></li>
-                <li><a href="#" data-id="">Accessories</a></li>
-                <li><a href="#" data-id="">Footwear</a></li>
-            </ul>
-        </div>
+    <div id="checkout-section" style="display: none;">
+        <div id="app"></div>
     </div>
-    <div id="overlay"></div>
+
+    <div class="hero">
+        <img src="/src/banner/03_banner.avif" alt="" class="hero-img">
+    </div>
+
 
         <main>
-            <section>
-                <div id="filter-container"></div>
-                <div id="product-list" class="product-listing"></div>
-            </section>
+            <div id="product-listing-section">
+                <section>
+                    <div id="filter-container"></div>
+                    <div id="product-list" class="product-listing"></div>
+                </section>
+            </div>
         </main>
- <!-- Adding a container for checkout feature -->
-    <div id="app"></div> 
+         <!-- Container for checkout feature -->
     <footer>
-        © Shopler Inc. All rights Reserved. 2024
+        © 2024 JD Top Inc. All rights Reserved.
     </footer>
 
 </body>
