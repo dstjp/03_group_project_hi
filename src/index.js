@@ -3,7 +3,6 @@ import './pages/product_listing/product_listing.css';
 import './pages/product_listing/product_listing.js';
 import './pages/filter/filter.js';
 import './pages/shopping_cart/shopping_cart.js';
-import Cart from './pages/shopping_cart/shopping_cart.js';
 
 
 

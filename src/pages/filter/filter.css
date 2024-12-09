@@ -1,4 +1,4 @@
-/* Filter Container */
+
 .filter-container {
     display: flex;
     justify-content: center;
@@ -10,7 +10,7 @@
     border-radius: 0.5rem;
 }
 
-/* Filter Button */
+
 .filter-button {
     display: inline-flex;
     justify-content: center;
@@ -23,10 +23,12 @@
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
 }
+
 .filter-button:focus {
-    outline: 2px solid #e44d26; /* Highlight focused button */
+    outline: 2px solid #e44d26; 
     outline-offset: 2px;
 }
+
 .filter-button.active {
     background-color: #e44d26;
     transform: scale(1.1);
@@ -34,16 +36,16 @@
 }
 
 .filter-button:hover {
-    background-color: #e0e0e0; /* Lighter hover effect */
-    color: #333333; /* Darker text for better contrast */
+    background-color: #e0e0e0; 
+    color: #333333; 
 }
 
-/* Sort and Price Range */
+
 #sort-select, #price-range {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ddd;
-    background-color: #ffffff;
+    background-color: #2fc36a;
 }
 
 #price-value {
@@ -53,12 +55,12 @@
 }
 
 .error-message {
-    position: relative; /* Position for dismiss button */
-    padding: 10px 40px 10px 10px; /* Space for dismiss button */
+    position: relative; 
+    padding: 10px 40px 10px 10px; 
 }
 
 .error-message::after {
-    content: "✖"; /* Dismiss symbol */
+    content: "✖"; 
     position: absolute;
     top: 50%;
     right: 10px;
@@ -68,16 +70,16 @@
     font-size: 1.2rem;
 }
 
-/* Responsive Layout */
+
 @media (max-width: 768px) {
     .filter-container {
         flex-direction: column;
-        align-items: center; /* Ensure proper alignment */
-        padding: 10px; /* Add spacing for mobile */
+        align-items: center; 
+        padding: 10px; 
     }
 
     .filter-button {
-        width: 100%; /* Make buttons full-width on smaller screens */
-        margin-bottom: 10px; /* Add spacing between buttons */
+        width: 100%; 
+        margin-bottom: 10px; 
     }
 }

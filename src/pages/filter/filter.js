@@ -1,36 +1,51 @@
 import './filter.css';
 import '../product_listing/product_listing.js';
 
-// productFilter.js
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 export function createFilterUI(products, containerElement, onFilterChange) {
   const filterContainer = document.createElement("div");
   filterContainer.className = "filter-container";
 
-    // Define background colors for categories
-    const categoryColors = {
-      electronics: "#f4a261",
-      jewelery: "#2a9d8f",
-      "men's clothing": "#264653",
-      "women's clothing": "#e76f51",
-    };
+  // Define background colors for categories
+  const categoryColors = {
+    electronics: "#f4a261",
+    jewelery: "#2a9d8f",
+    "men's clothing": "#264653",
+    "women's clothing": "#e76f51",
+  };
+
+  // Add "All Products" button
+  const allButton = document.createElement("button");
+  allButton.className = "filter-button active";
+  allButton.textContent = "All Products";
+  allButton.dataset.category = "";
+  filterContainer.appendChild(allButton);
 
   // Unique categories from products
   const categories = [...new Set(products.map(product => product.category))];
 
   // Create category buttons
-  categories.forEach(category => {
+  [allButton, ...categories.map(category => {
     const button = document.createElement("button");
     button.className = "filter-button";
     button.textContent = capitalize(category);
     button.dataset.category = category;
-
-     // Assign background color based on category
-     button.style.backgroundColor = categoryColors[category] || "#ccc"; // Default color if category is missing
-
+    button.style.backgroundColor = categoryColors[category] || "#ccc"; // Assign background color
+    return button;
+  })].forEach(button => {
     // Handle button click
     button.addEventListener("click", () => {
-      button.classList.toggle("active"); // Toggle active class
+      // Remove 'active' class from all buttons
+      filterContainer.querySelectorAll(".filter-button").forEach(btn => {
+        btn.classList.remove("active");
+      });
+      
+      // Toggle 'active' class on the clicked button
+      button.classList.add("active");
+      
       onFilterChange(getFilterState()); // Trigger filter update
     });
 
@@ -73,28 +88,22 @@ export function createFilterUI(products, containerElement, onFilterChange) {
 
   // Get the current filter state
   function getFilterState() {
-    const selectedCategories = Array.from(filterContainer.querySelectorAll(".filter-button.active"))
-      .map(button => button.dataset.category);
+    const selectedCategory = filterContainer.querySelector(".filter-button.active")?.dataset.category || "";
 
     const sortValue = sortSelect.value;
     const maxPrice = parseInt(priceRange.value, 10);
 
-    return { selectedCategories, sortValue, maxPrice };
-  }
-
-  // Capitalize category names
-  function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    return { selectedCategory, sortValue, maxPrice };
   }
 }
 
 export function applyFilters(products, filterState) {
-  const { selectedCategories, sortValue, maxPrice } = filterState;
+  const { selectedCategory, sortValue, maxPrice } = filterState;
 
-  // Filter products by categories and price range
+  // Filter products by category and price range
   let filteredProducts = products.filter(
     product =>
-      (selectedCategories.length === 0 || selectedCategories.includes(product.category)) &&
+      (selectedCategory === "" || product.category === selectedCategory) &&
       product.price <= maxPrice
   );
 
