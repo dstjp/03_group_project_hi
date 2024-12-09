@@ -1,15 +1,18 @@
 import './shopping_cart.css';
 
+export function getCheckoutButton() {
+  return document.querySelector(".checkout-btn");
+}
+
 export default class Cart {
   constructor(cartContainerId, cartCountId) {
-    this.cartItems = []; // Array to store cart items
+    this.cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
     this.cartContainer = document.getElementById(cartContainerId);
     this.cartCount = document.getElementById(cartCountId);
     this.initCartToggle();
     this.renderCart();
   }
 
-  // Initialize cart toggle for visibility
   initCartToggle() {
     const cartIcon = document.getElementById('cart-link');
     if (cartIcon) {
@@ -21,51 +24,47 @@ export default class Cart {
     }
   }
 
-  // Add a product to the cart
   addToCart(product) {
     const existingItem = this.cartItems.find((item) => item.id === product.id);
     if (existingItem) {
-      existingItem.quantity += 1; // Increment quantity if product already exists
+      existingItem.quantity += 1;
     } else {
-      this.cartItems.push({ ...product, quantity: 1 }); // Add new product with quantity 1
+      this.cartItems.push({ ...product, quantity: 1 });
     }
     this.updateCartCount();
     this.renderCart();
+    localStorage.setItem("cartItems", JSON.stringify(this.cartItems));
   }
 
-  // Remove a product completely from the cart
   removeFromCart(productId) {
     this.cartItems = this.cartItems.filter((item) => item.id !== productId);
     this.updateCartCount();
     this.renderCart();
+    localStorage.setItem("cartItems", JSON.stringify(this.cartItems));
   }
 
-  // Update the quantity of a product
   updateQuantity(productId, increment = true) {
     const item = this.cartItems.find((item) => item.id === productId);
     if (item) {
       item.quantity = increment ? item.quantity + 1 : item.quantity - 1;
       if (item.quantity <= 0) {
-        this.removeFromCart(productId); // Remove item if quantity goes to 0
+        this.removeFromCart(productId);
       } else {
-        this.renderCart(); // Update the cart UI
+        this.renderCart();
       }
     }
     this.updateCartCount();
   }
 
-  // Update the cart count badge
   updateCartCount() {
     const totalItems = this.cartItems.reduce((total, item) => total + item.quantity, 0);
     this.cartCount.textContent = totalItems;
   }
 
-  // Calculate total cost of the cart
   calculateTotalCost() {
     return this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
   }
 
-  // Render the cart UI
   renderCart() {
     this.cartContainer.innerHTML = `
       <div class="cart-header">
@@ -105,7 +104,6 @@ export default class Cart {
       }
     `;
 
-    // Attach event listeners for quantity buttons
     const increaseButtons = this.cartContainer.querySelectorAll(".quantity-btn.increase");
     const decreaseButtons = this.cartContainer.querySelectorAll(".quantity-btn.decrease");
     const removeButtons = this.cartContainer.querySelectorAll(".remove-cart-item-btn");
@@ -131,32 +129,31 @@ export default class Cart {
       });
     });
 
-    // Close button functionality
     const closeButton = this.cartContainer.querySelector('.close-cart-btn');
     if (closeButton) {
       closeButton.addEventListener('click', () => {
         this.cartContainer.style.display = 'none';
       });
     }
-    // Attach event listener to checkout button
+
     const checkoutButton = this.cartContainer.querySelector(".checkout-btn");
     if (checkoutButton) {
-        checkoutButton.addEventListener("click", () => {
-        this.navigateToCheckout(); // Call navigation function
-        });
+      checkoutButton.addEventListener("click", () => {
+        this.navigateToCheckout();
+      });
     }
-}
-    // Navigate to checkout page
-    navigateToCheckout() {
-    // Dynamically load the checkout page JavaScript
+  }
+
+  navigateToCheckout() {
+    this.cartContainer.style.display = "none";
     import("../checkout/checkout.js")
-        .then((module) => {
-        const renderCheckout = module.default;
-        renderCheckout(); // Call the function exported from checkout.js
-        })
-        .catch((error) => {
+      .then((module) => {
+        const renderCheckoutPage = module.renderCheckoutPage;
+        const cartData = JSON.parse(localStorage.getItem("cartItems")) || [];
+        renderCheckoutPage(cartData);
+      })
+      .catch((error) => {
         console.error("Error loading checkout page:", error);
-        });
-    }
+      });
+  }
 }
-  
