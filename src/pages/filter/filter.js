@@ -13,7 +13,6 @@ export function createFilterUI(products, containerElement, onFilterChange) {
     button.textContent = capitalize(category);
     button.dataset.category = category;
 
-    // Handle button click
     button.addEventListener("click", () => {
       button.classList.toggle("active"); 
       onFilterChange(getFilterState()); 
@@ -22,7 +21,6 @@ export function createFilterUI(products, containerElement, onFilterChange) {
     filterContainer.appendChild(button);
   });
 
-  // Sort dropdown
   const sortSelect = document.createElement("select");
   sortSelect.id = "sort-select";
   sortSelect.innerHTML = `
