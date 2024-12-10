@@ -112,7 +112,4 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     });
   }
-}
-
-
-//Search
+});
