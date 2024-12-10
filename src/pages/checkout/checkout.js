@@ -1,32 +1,32 @@
-import "./checkout.css"; 
-import klarnaImage from "./klarna.jpg";
-import swishImage from "./swish.jpg";
-import cardImage from "./card.jpg";
-import paypalImage from "./paypal.jpg";
+import "./checkout.css";
+import klarnaImage from "../img/klarna.jpg";
+import swishImage from "../img/swish.jpg";
+import cardImage from "../img/card.jpg";
+import paypalImage from "../img/paypal.jpg";
 import Cart from "../shopping_cart/shopping_cart.js";
 
-const productListingSection = document.getElementById("product-listing-section");
+const productListingSection = document.getElementById(
+  "product-listing-section"
+);
 const checkoutSection = document.getElementById("checkout-section");
 
 export function renderCheckoutPage(cartData) {
-   // Validate if cart data is available
-   if (!cartData || cartData.length === 0) {
+  // Trying to Validate if cart data is available
+  if (!cartData || cartData.length === 0) {
     console.error("Cart data is empty or unavailable.");
     return;
   }
 
-  const app = document.getElementById("app"); 
+  const app = document.getElementById("app");
   const checkoutContainer = document.createElement("div");
   checkoutContainer.className = "checkout-container";
 
-  // Hide product listing and show checkout
-  productListingSection.style.display = "none";
- //new code
+  productListingSection.style.display = "none"; // Hide product listing and show checkout
+
   const cartSection = document.getElementById("cart-container");
-    if (cartSection) {
-        cartSection.style.display = "none";
-    }
-    //ends here
+  if (cartSection) {
+    cartSection.style.display = "none";
+  }
   checkoutSection.style.display = "block";
 
   let bagItemsHTML = "";
@@ -34,7 +34,7 @@ export function renderCheckoutPage(cartData) {
 
   // Loop through cart data to generate checkout items
   cartData.forEach((item) => {
-    subtotal += item.price * item.quantity; // Adjusted to use `quantity` from shopping-cart.js
+    subtotal += item.price * item.quantity;
     bagItemsHTML += `
       <div class="product-details">
         <img src="${item.image}" alt="${item.title}" />
@@ -48,8 +48,8 @@ export function renderCheckoutPage(cartData) {
     `;
   });
 
-  const shipping = 8.00; 
-  const tax = 0.00; 
+  const shipping = 8.0;
+  const tax = 0.0;
   const total = subtotal + shipping + tax;
 
   checkoutContainer.innerHTML = `
@@ -154,11 +154,12 @@ export function renderCheckoutPage(cartData) {
         <p>Subtotal <span>$${subtotal.toFixed(2)}</span></p>
         <p>Estimated Shipping <span>$${shipping.toFixed(2)}</span></p>
         <p>Estimated Tax <span>$${tax.toFixed(2)}</span></p>
-        <p class="total">Total <span class="total-amt">$${total.toFixed(2)}</span></p>
+        <p class="total">Total <span class="total-amt">$${total.toFixed(
+          2
+        )}</span></p>
       </div>
       <div class="divider"></div>
       <div class="arrival-info">
-       
         ${bagItemsHTML}
       </div>
     </aside>
@@ -170,63 +171,54 @@ export function renderCheckoutPage(cartData) {
 </div>
   `;
 
-  app.innerHTML = ""; 
+  app.innerHTML = "";
   app.appendChild(checkoutContainer);
 
-  // Handle form submission
-  document.getElementById("checkout-form").addEventListener("submit", (event) => {
-    event.preventDefault();
-    const paymentSection = document.querySelector(".payment-container");
-    
-    // Scroll to the payment section
-    paymentSection.scrollIntoView({ behavior: "smooth" });
-  
-    // Highlight the section
-    paymentSection.classList.add("highlight");
-  
-    // Remove the highlight after 3 seconds
-    setTimeout(() => {
-      paymentSection.classList.remove("highlight");
-    }, 3000);
-  });
-  
+  // Handling form submission
+  document
+    .getElementById("checkout-form")
+    .addEventListener("submit", (event) => {
+      event.preventDefault();
+      const paymentSection = document.querySelector(".payment-container");
+
+      paymentSection.scrollIntoView({ behavior: "smooth" }); // Scroll to the payment section
+      paymentSection.classList.add("highlight");
+      setTimeout(() => {
+        paymentSection.classList.remove("highlight");
+      }, 3000);
+    });
+
   document
     .getElementById("payment-form")
     .addEventListener("submit", handleFormSubmit);
 }
+// Payment form submission handler
 
 function handleFormSubmit(event) {
-  event.preventDefault(); 
-  document.body.style.opacity = '0.8';
-  document.getElementById('dialog-container').style.display = 'block';
-  
-  // hide the dialog after a few seconds:
-  setTimeout(function() {
-    document.body.style.opacity = '1';
-    document.getElementById('dialog-container').style.display = 'none';
-  
-     // Clear cart data after order confirmation
-     localStorage.removeItem("cartItems");
-     //new code
-     const cartInstance = new Cart("cart-container", "cart-count");
-     cartInstance.renderCart();
-     //ends here
+  event.preventDefault();
+  document.body.style.opacity = "0.8";
+  document.getElementById("dialog-container").style.display = "block";
 
   
-  document.getElementById("checkout-form").reset();
-  document.getElementById("payment-form").reset();
-  
-  const paymentRadios = document.querySelectorAll('[name="payment-method"]');
-  paymentRadios.forEach((radio) => {
-    radio.checked = false;
-  });
-  
+  setTimeout(function () {
+    document.body.style.opacity = "1";
+    document.getElementById("dialog-container").style.display = "none";
 
-  productListingSection.style.display = "block"; 
-    checkoutSection.style.display = "none"; 
+    localStorage.removeItem("cartItems");  // Clear cart data after order confirmation
+    const cartInstance = new Cart("cart-container", "cart-count");
+    cartInstance.renderCart();
+
+    document.getElementById("checkout-form").reset();
+    document.getElementById("payment-form").reset();
+
+    const paymentRadios = document.querySelectorAll('[name="payment-method"]');
+    paymentRadios.forEach((radio) => {
+      radio.checked = false;
+    });
+
+    productListingSection.style.display = "block";
+    checkoutSection.style.display = "none";
 
     productListingSection.scrollIntoView({ behavior: "smooth" });
-}, 3000);
-
+  }, 3000);
 }
-
