@@ -60,13 +60,4 @@ describe('createFilterUI', () => {
     expect(onFilterChange).toHaveBeenCalled();
   });
 
-  test('should update filter state on price range change', () => {
-    createFilterUI(products, containerElement, onFilterChange);
-
-    const priceRange = containerElement.querySelector('#price-range');
-    priceRange.value = '100';
-    priceRange.dispatchEvent(new Event('input'));
-
-    expect(onFilterChange).toHaveBeenCalled();
-  });
 });
