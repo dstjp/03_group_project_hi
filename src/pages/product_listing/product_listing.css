@@ -109,7 +109,7 @@
 
 .svg-container svg {
     height: 100%;
-    width: 150%;
+    width: 100%;
 }
 
 .svg-container .product-price {
@@ -166,14 +166,14 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #27ae60;
-    color: white;
+    background-color: rgba(249, 249, 249, 0.8);
+    color: black;
     padding: 10px 20px;
-    border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     font-size: 1rem;
     z-index: 1000;
-    opacity: 0;
+    opacity: 1;
+    border-bottom: 1px solid #000000;
     transform: translateY(20px);
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
