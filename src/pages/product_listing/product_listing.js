@@ -32,8 +32,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     displayProducts(allProducts);
   } catch (error) {
     console.error("Error loading products:", error);
-    productListContainer.innerHTML =`⁠<p class="error-message">Failed to load products.</p>`;
+    productListContainer.innerHTML = `⁠<p class="error-message">Failed to load products.</p>`;
   }
+
 
   function displayProducts(products) {
     productListContainer.innerHTML = products
@@ -74,6 +75,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           </div>
         </div>
       `
+
       )
       .join("");
   
