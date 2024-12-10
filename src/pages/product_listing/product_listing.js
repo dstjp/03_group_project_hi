@@ -1,7 +1,7 @@
 import Cart from "../shopping_cart/shopping_cart.js";
 import './product_listing.css'
 import { fetchProducts } from "../../api.js";
-import { createFilterUI, applyFilters } from '../filter/filter.js';  // Import your filter functions
+import { createFilterUI, applyFilters } from '../filter/filter.js'; 
 
 document.addEventListener("DOMContentLoaded", async () => {
   const productListContainer = document.getElementById("product-list");
@@ -10,10 +10,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   let allProducts = [];
 
   try {
-    // Fetch all products
     allProducts = await fetchProducts();
     
-    // Create filter UI
     createFilterUI(allProducts, filterContainer, (filterState) => {
       const filteredProducts = applyFilters(allProducts, filterState);
       displayProducts(filteredProducts);
@@ -79,7 +77,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       )
       .join("");
   
-    // Attach "Add to Cart" event listeners
+
     const addToCartButtons = productListContainer.querySelectorAll(".add-to-cart-btn");
     function showNotification(message) {
       console.log("Notification triggered:", message);
@@ -94,7 +92,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         notification.classList.add("show");
       }, 10);
     
-      // Remove the notification after 2 seconds
       setTimeout(() => {
         notification.remove();
       }, 2000);
