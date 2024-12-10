@@ -19,7 +19,7 @@
 }
 
 .sidebar {
-  flex: 1; /* Takes 1 part of the width */
+  flex: 1; 
   min-width: 300px;
   background-color: #f9f9f9;
   padding: 20px;
