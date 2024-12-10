@@ -26,3 +26,4 @@ const observeCheckoutButton = () => {
 
 document.addEventListener("DOMContentLoaded", observeCheckoutButton);
 
+ 

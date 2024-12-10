@@ -152,6 +152,10 @@ export default class Cart {
         const renderCheckoutPage = module.renderCheckoutPage;
         const cartData = JSON.parse(localStorage.getItem("cartItems")) || [];
         renderCheckoutPage(cartData);
+        //to make Hero Banner disappear when clicking go to checkout
+        document.getElementById("hero-banner").style.display = 'none';
+        // Scroll to the top when clicking checkout
+        document.documentElement.scrollTop = 0;
       })
       .catch((error) => {
         console.error("Error loading checkout page:", error);

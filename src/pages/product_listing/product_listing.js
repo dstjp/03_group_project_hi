@@ -1,25 +1,17 @@
 import Cart from "../shopping_cart/shopping_cart.js";
 import './product_listing.css'
 import { fetchProducts } from "../../api.js";
-import { createFilterUI, applyFilters } from '../filter/filter.js';  // Import your filter functions
+import { createFilterUI, applyFilters } from '../filter/filter.js'; 
 
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  init();
-});
-
-export async function init() {
+document.addEventListener("DOMContentLoaded", async () => {
   const productListContainer = document.getElementById("product-list");
   const filterContainer = document.getElementById("filter-container");
   const cart = new Cart('cart-container', 'cart-count'); 
   let allProducts = [];
 
   try {
-    // Fetch all products
     allProducts = await fetchProducts();
-
-    // Create filter UI
+    
     createFilterUI(allProducts, filterContainer, (filterState) => {
       const filteredProducts = applyFilters(allProducts, filterState);
       displayProducts(filteredProducts);
@@ -87,7 +79,7 @@ export async function init() {
       )
       .join("");
   
-    // Attach "Add to Cart" event listeners
+
     const addToCartButtons = productListContainer.querySelectorAll(".add-to-cart-btn");
     function showNotification(message) {
       console.log("Notification triggered:", message);
@@ -102,7 +94,6 @@ export async function init() {
         notification.classList.add("show");
       }, 10);
     
-      // Remove the notification after 2 seconds
       setTimeout(() => {
         notification.remove();
       }, 2000);

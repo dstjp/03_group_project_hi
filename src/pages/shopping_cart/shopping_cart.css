@@ -101,7 +101,7 @@
     color: white;
     border: none;
   }
-  /* Quantity Buttons */
+  
 .quantity-btn {
     background: transparent;
     border: none;
@@ -180,7 +180,7 @@
 }
 @media (max-width: 768px) {
     #cart-container {
-        width: 90%; /* Take most of the screen width */
+        width: 90%; 
         right: 5%;
         top: 10px;
     }
